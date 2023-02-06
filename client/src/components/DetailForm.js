@@ -182,15 +182,14 @@ const SContact = styled.div`
   }
 `;
 
-const DetailForm = ({ data, page, id }) => {
+const DetailForm = ({ data, endpoint, id }) => {
   const navigate = useNavigate();
-  const endpoint = page === 'share' ? 'borrows' : 'requests';
 
   // 자기가 쓴 글이 아니면 수정, 삭제 버튼이 안 보여야 함
   const currentUser = sessionStorage.getItem('displayName');
   const isSameUser = data.displayName === currentUser ? true : false;
 
-  const onlyInShare = page === 'share' ? '' : 'onlyInShare';
+  const onlyInShare = endpoint === 'borrows' ? '' : 'onlyInShare';
 
   // 삭제 버튼 핸들러
   const handleDelete = () => {
@@ -243,7 +242,7 @@ const DetailForm = ({ data, page, id }) => {
                   <div className="controlButtons">
                     <Link
                       to={
-                        page === 'request'
+                        endpoint === 'requests'
                           ? `/reqEdit/${id}`
                           : `/shareEdit/${id}`
                       }
@@ -288,7 +287,7 @@ const DetailForm = ({ data, page, id }) => {
               </div>
               <SContact>
                 <div>
-                  {page === 'request'
+                  {endpoint === 'requests'
                     ? '이 책을 갖고 계신가요?'
                     : '이 책을 찾고 계셨나요?'}
                 </div>

@@ -38,7 +38,7 @@ const CommonDetail = ({ endpoint }) => {
 
   return (
     <>
-      <DetailForm data={data} page="request" id={id} />
+      <DetailForm data={data} endpoint={endpoint} id={id} />
       <Comment endpoint={endpoint} comments={comment} id={id} />
     </>
   );
