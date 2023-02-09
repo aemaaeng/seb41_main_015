@@ -5,24 +5,30 @@ import DetailForm from '../components/DetailForm';
 import Swal from 'sweetalert2';
 import Comment from '../components/Comment';
 
-const ReqDetail = () => {
+const CommonDetail = ({ endpoint }) => {
   const { id } = useParams();
   const [data, setData] = useState({});
-  const [reqComment, setReqComment] = useState([]);
+  const [comment, setComment] = useState([]);
   const url = 'https://serverbookvillage.kro.kr/';
 
   useEffect(() => {
     window.scrollTo(0, 0);
     axios
-      .get(url + `v1/requests/${id}`)
+      .get(url + `v1/${endpoint}/${id}`)
       .then((res) => {
+        // 게시글 정보
         setData(res.data.data);
-        const sortRequestComments = res.data.data.requestComments;
+
+        const comments =
+          endpoint === 'borrows'
+            ? res.data.data.borrowComments
+            : res.data.data.requestComments;
+        const sortComments = comments;
         //댓글 최신순 정렬
-        sortRequestComments.sort(
+        sortComments.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        setReqComment(res.data.data.requestComments);
+        setComment(sortComments);
       })
       .catch((err) => {
         Swal.fire('데이터 로딩 실패', '데이터 로딩에 실패했습니다.', 'warning');
@@ -32,10 +38,10 @@ const ReqDetail = () => {
 
   return (
     <>
-      <DetailForm data={data} page="request" id={id} />
-      <Comment data={data} reqComment={reqComment} page="request" id={id} />
+      <DetailForm data={data} endpoint={endpoint} id={id} />
+      <Comment endpoint={endpoint} comments={comment} id={id} />
     </>
   );
 };
 
-export default ReqDetail;
+export default CommonDetail;

@@ -104,13 +104,12 @@ const SCommentWrap = styled.div`
   margin: 10px 0;
 `;
 
-const Comment = ({ data, borrowComment, reqComment, page, id }) => {
+const Comment = ({ endpoint, comments, id }) => {
   const [content, setContent] = useState('');
   const [contentForm, setContentForm] = useState('');
   const navigate = useNavigate();
 
-  const endpoint = page === 'share' ? 'borrows' : 'requests';
-  const commentMap = page === 'share' ? borrowComment : reqComment;
+  // const commentMap = page === 'share' ? borrowComment : reqComment;
 
   // 해당하는 유저에게만 댓글을 수정하고 삭제하는 권한주기
   const currentUser = sessionStorage.getItem('displayName');
@@ -276,10 +275,9 @@ const Comment = ({ data, borrowComment, reqComment, page, id }) => {
         </button>
       </SInputContainer>
       <SCommentContainer>
-        {commentMap.map((comment) => {
-          console.log('comment', comment);
+        {comments.map((comment) => {
           const commentId =
-            page === 'share'
+            endpoint === 'borrows'
               ? comment.borrowCommentId
               : comment.requestCommentId;
           const isSameUser = comment.displayName === currentUser ? true : false;

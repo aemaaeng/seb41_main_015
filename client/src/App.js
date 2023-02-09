@@ -5,10 +5,8 @@ import CommonList from './page/CommonList';
 import Header from './components/Header';
 import ShareAdd from './page/ShareAdd';
 import ShareEdit from './page/ShareEdit';
-import ShareDetail from './page/ShareDetail';
 import ReqAdd from './page/ReqAdd';
 import ReqEdit from './page/ReqEdit';
-import ReqDetail from './page/ReqDetail';
 import MyPage from './page/MyPage';
 import MyPageEdit from './page/MyPageEdit';
 import Callback from './page/Callback';
@@ -16,6 +14,7 @@ import RateList from './page/RateList';
 import RateAdd from './page/RateAdd';
 import RateDetail from './page/RateDetail';
 import Footer from './components/Footer';
+import CommonDetail from './page/CommonDetail';
 
 const App = () => {
   return (
@@ -35,7 +34,10 @@ const App = () => {
         />
         <Route path="/shareAdd" element={<ShareAdd />} />
         <Route path="/shareEdit/:id" element={<ShareEdit />} />
-        <Route path="/shareDetail/:id" element={<ShareDetail />} />
+        <Route
+          path="/shareDetail/:id"
+          element={<CommonDetail endpoint="borrows" />}
+        />
         <Route
           path="/reqList"
           element={
@@ -48,7 +50,10 @@ const App = () => {
         />
         <Route path="/reqAdd" element={<ReqAdd />} />
         <Route path="/reqEdit/:id" element={<ReqEdit />} />
-        <Route path="/reqDetail/:id" element={<ReqDetail />} />
+        <Route
+          path="/reqDetail/:id"
+          element={<CommonDetail endpoint="requests" />}
+        />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypageEdit" element={<MyPageEdit />} />
         <Route path="/rateList" element={<RateList />} />
