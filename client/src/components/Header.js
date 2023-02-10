@@ -190,22 +190,15 @@ const Header = () => {
   // 헤더 바깥부분 클릭해도 유지되는 로직 (수정 후: pathname 이용)
   // 나눔 관련 경로: shareList, shareAdd, shareDetail, shareEdit
   // 요청 관련 경로: reqList, reqAdd, reqDetail, reqEdit
-  const currentLocation = (pathname) => {
-    if (pathname.slice(1, 4) === 'req') {
-      return 'request';
-    } else if (pathname.slice(1, 6) === 'share') {
-      return 'share';
-    } else if (pathname.slice(1, 5) === 'rate') {
-      return 'rate';
-    }
-  };
-
-  const shareClassName =
-    currentLocation(pathname) === 'share' ? 'olItem focused' : 'olItem';
-  const requestClassName =
-    currentLocation(pathname) === 'request' ? 'olItem focused' : 'olItem';
-  const rateClassName =
-    currentLocation(pathname) === 'rate' ? 'olItem focused' : 'olItem';
+  const shareClassName = pathname.startsWith('/share')
+    ? 'olItem focused'
+    : 'olItem';
+  const requestClassName = pathname.startsWith('/req')
+    ? 'olItem focused'
+    : 'olItem';
+  const rateClassName = pathname.startsWith('/rate')
+    ? 'olItem focused'
+    : 'olItem';
 
   //프로필 이미지 가져오기
   useEffect(() => {
