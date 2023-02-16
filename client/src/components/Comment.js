@@ -6,20 +6,31 @@ import { prettyDate } from '../util/dateparse';
 import { useNavigate } from 'react-router-dom';
 
 const SCommentForm = styled.div`
-  margin: 30px 0;
+  margin: 30px auto;
+  padding: 0px 150px 0px 130px;
+  max-width: 1280px;
+
+  @media screen and (max-width: 1100px) {
+    padding: 0px 24px;
+  }
 `;
+
+const SCommentsInfo = styled.h2`
+  font-size: 1.3rem;
+`;
+
 const SInputContainer = styled.div`
   display: flex;
-  justify-content: center;
-  margin: 30px 0;
+  justify-content: space-between;
+  margin: 30px 0px 40px 0px;
   .InputComment {
-    width: 50%;
-    height: 40px;
+    width: 100%;
+    height: 60px;
     border: 1px solid #aaaaaa;
     border-radius: 5px;
     padding-left: 10px;
   }
-  .SunmbitComment {
+  .SubmitComment {
     margin-left: 30px;
     width: 100px;
     color: #ffffff;
@@ -28,24 +39,21 @@ const SInputContainer = styled.div`
     background-color: #bb2649;
   }
 `;
+
 const SCommentContainer = styled.div`
   color: #212529;
-  display: flex;
-  flex-direction: column;
   padding-bottom: 24px;
-  margin: 0 20%;
 `;
 
 const SUserContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
   img {
-    margin: 0;
+    margin: 0px 10px 0px 5px;
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    margin-right: 10px;
   }
   .userName {
     font-size: 16px;
@@ -61,6 +69,7 @@ const SUserContainer = styled.div`
     }
   }
 `;
+
 const SUserComment = styled.div`
   .content {
     width: 100%;
@@ -99,17 +108,17 @@ const SUserComment = styled.div`
     }
   }
 `;
+
 const SCommentWrap = styled.div`
   border-bottom: 1px solid #ececec;
-  margin: 10px 0;
+  margin: 20px 0;
+  padding-bottom: 10px;
 `;
 
 const Comment = ({ endpoint, comments, id }) => {
   const [content, setContent] = useState('');
   const [contentForm, setContentForm] = useState('');
   const navigate = useNavigate();
-
-  // const commentMap = page === 'share' ? borrowComment : reqComment;
 
   // 해당하는 유저에게만 댓글을 수정하고 삭제하는 권한주기
   const currentUser = sessionStorage.getItem('displayName');
@@ -259,6 +268,7 @@ const Comment = ({ endpoint, comments, id }) => {
   };
   return (
     <SCommentForm>
+      <SCommentsInfo>댓글 {comments.length}</SCommentsInfo>
       <SInputContainer>
         <input
           type="text"
@@ -266,11 +276,7 @@ const Comment = ({ endpoint, comments, id }) => {
           placeholder="댓글을 남겨보세요"
           onChange={handleChangeContent}
         />
-        <button
-          className="SunmbitComment"
-          type="sumbit"
-          onClick={commentSubmit}
-        >
+        <button className="SubmitComment" type="sumbit" onClick={commentSubmit}>
           등록
         </button>
       </SInputContainer>
