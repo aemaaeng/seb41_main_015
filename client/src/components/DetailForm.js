@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ToggleSwitch from './ToggleSwitch';
 import ShareStatus from './ShareStatus';
+import Comment from './Comment';
 import instanceAxios from '../reissue/InstanceAxios';
 import { prettyDate } from '../util/dateparse';
 import { ReactComponent as KakaoFill } from '../image/kakaofill.svg';
@@ -183,7 +184,7 @@ const SContact = styled.div`
   }
 `;
 
-const DetailForm = ({ data, endpoint, id }) => {
+const DetailForm = ({ data, endpoint, id, comments }) => {
   const navigate = useNavigate();
 
   // 자기가 쓴 글이 아니면 수정, 삭제 버튼이 안 보여야 함
@@ -306,6 +307,7 @@ const DetailForm = ({ data, endpoint, id }) => {
           </SRightSide>
         </SDetailWrap>
       </div>
+      <Comment endpoint={endpoint} comments={comments} id={id} />
     </SDetailLayout>
   );
 };
