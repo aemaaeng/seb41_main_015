@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import DetailForm from '../components/DetailForm';
 import Swal from 'sweetalert2';
-import Comment from '../components/Comment';
 
 const CommonDetail = ({ endpoint }) => {
   const { id } = useParams();
@@ -38,8 +37,7 @@ const CommonDetail = ({ endpoint }) => {
 
   return (
     <>
-      <DetailForm data={data} endpoint={endpoint} id={id} />
-      <Comment endpoint={endpoint} comments={comment} id={id} />
+      <DetailForm data={data} endpoint={endpoint} id={id} comments={comment} />
     </>
   );
 };
