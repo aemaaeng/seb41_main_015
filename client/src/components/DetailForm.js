@@ -31,6 +31,7 @@ const SDetailWrap = styled.div`
   @media screen and (max-width: 1100px) {
     flex-direction: column;
     align-items: center;
+    gap: 0px;
   }
 `;
 
