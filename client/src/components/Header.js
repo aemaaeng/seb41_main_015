@@ -190,15 +190,13 @@ const Header = () => {
   // 헤더 바깥부분 클릭해도 유지되는 로직 (수정 후: pathname 이용)
   // 나눔 관련 경로: shareList, shareAdd, shareDetail, shareEdit
   // 요청 관련 경로: reqList, reqAdd, reqDetail, reqEdit
-  const shareClassName = pathname.startsWith('/share')
-    ? 'olItem focused'
-    : 'olItem';
-  const requestClassName = pathname.startsWith('/req')
-    ? 'olItem focused'
-    : 'olItem';
-  const rateClassName = pathname.startsWith('/rate')
-    ? 'olItem focused'
-    : 'olItem';
+  const currentPage = (location) => {
+    if (pathname.startsWith(location)) {
+      return 'olItem focused';
+    } else {
+      return 'olItem';
+    }
+  };
 
   //프로필 이미지 가져오기
   useEffect(() => {
@@ -223,13 +221,13 @@ const Header = () => {
         <Logo className="logo" />
       </SHeaderLogo>
       <SNavContainer>
-        <Link to="/shareList" className={shareClassName}>
+        <Link to="/shareList" className={currentPage('/share')}>
           나눔
         </Link>
-        <Link to="/reqList" className={requestClassName}>
+        <Link to="/reqList" className={currentPage('/req')}>
           요청
         </Link>
-        <Link to="/rateList" className={rateClassName}>
+        <Link to="/rateList" className={currentPage('/rate')}>
           평점
         </Link>
         <div className="olItem preparing">커뮤니티</div>
