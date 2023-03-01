@@ -209,7 +209,7 @@ const ReqForm = (props) => {
               name="talkUrl"
               value={talkUrl || ''}
               onChange={(e) => handleChangeString(e, 'talkUrl')}
-              placeholder="오픈채팅 대화방 링크를 입력해주세요."
+              placeholder="오픈채팅 대화방 링크를 입력해주세요. (http://, https:// 포함)"
               autoComplete="off"
             />
           </div>

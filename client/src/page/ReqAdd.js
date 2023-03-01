@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 import instanceAxios from '../reissue/InstanceAxios';
 import { useNavigate } from 'react-router-dom';
+import { checkTalkUrl } from '../util/checkTalkUrl';
 
 const ReqAdd = () => {
   const navigate = useNavigate();
@@ -32,31 +33,32 @@ const ReqAdd = () => {
       );
       return;
     }
-    instanceAxios
-      .post('/v1/requests', {
-        bookTitle,
-        author,
-        publisher,
-        talkUrl,
-        title,
-        content,
-        thumbnail,
-      })
-      .then((res) => {
-        Swal.fire(
-          '요청 글 등록 완료.',
-          '요청 글이 정상적으로 작성되었습니다.',
-          'success'
-        );
-        navigate('/reqList');
-      })
-      .catch((err) => {
-        Swal.fire(
-          '요청글 작성 실패',
-          '글 작성이 완료되지 않았습니다.',
-          'warning'
-        );
-      });
+
+    if (checkTalkUrl(talkUrl)) {
+      instanceAxios
+        .post('/v1/requests', {
+          bookTitle,
+          author,
+          publisher,
+          talkUrl,
+          title,
+          content,
+          thumbnail,
+        })
+        .then((res) => {
+          Swal.fire(
+            '요청 글 등록 완료.',
+            '요청 글이 정상적으로 작성되었습니다.',
+            'success'
+          );
+          navigate('/reqList');
+        })
+        .catch((err) => {
+          Swal.fire('요청글 작성 실패', '글 등록에 실패했습니다.', 'warning');
+        });
+    } else {
+      Swal.fire('오픈채팅 링크를 확인해주세요');
+    }
   };
 
   const handleBookInfoChange = (bookInfo) => {
