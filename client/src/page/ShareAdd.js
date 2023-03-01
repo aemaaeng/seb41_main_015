@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import ShareForm from '../components/ShareForm';
 import instanceAxios from '../reissue/InstanceAxios';
+import { checkTalkUrl } from '../util/checkTalkUrl';
 
 const ShareAdd = () => {
   const navigate = useNavigate();
@@ -32,31 +33,31 @@ const ShareAdd = () => {
       return;
     }
 
-    instanceAxios
-      .post('/v1/borrows', {
-        bookTitle,
-        author,
-        publisher,
-        talkUrl,
-        title,
-        content,
-        thumbnail,
-      })
-      .then((res) => {
-        Swal.fire(
-          '나눔 글 등록 완료.',
-          '나눔 글이 정상적으로 작성되었습니다.',
-          'success'
-        );
-        navigate('/shareList');
-      })
-      .catch((err) => {
-        Swal.fire(
-          '나눔글 작성 실패',
-          '글 작성이 완료되지 않았습니다.',
-          'warning'
-        );
-      });
+    if (checkTalkUrl(talkUrl)) {
+      instanceAxios
+        .post('/v1/borrows', {
+          bookTitle,
+          author,
+          publisher,
+          talkUrl,
+          title,
+          content,
+          thumbnail,
+        })
+        .then((res) => {
+          Swal.fire(
+            '나눔 글 등록 완료.',
+            '나눔 글이 정상적으로 작성되었습니다.',
+            'success'
+          );
+          navigate('/shareList');
+        })
+        .catch((err) => {
+          Swal.fire('나눔글 작성 실패', '글 등록에 실패했습니다.', 'warning');
+        });
+    } else {
+      Swal.fire('오픈채팅 링크를 확인해주세요');
+    }
   };
 
   const handleBookInfoChange = (bookInfo) => {
