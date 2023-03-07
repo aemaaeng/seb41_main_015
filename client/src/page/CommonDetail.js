@@ -1,11 +1,9 @@
-import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import DetailForm from '../components/DetailForm';
 import Swal from 'sweetalert2';
 
-const CommonDetail = ({ endpoint }) => {
-  const { id } = useParams();
+const CommonDetail = ({ endpoint, id }) => {
   const [data, setData] = useState({});
   const [comment, setComment] = useState([]);
   const url = 'https://serverbookvillage.kro.kr/';
