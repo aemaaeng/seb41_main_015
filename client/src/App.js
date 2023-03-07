@@ -14,7 +14,8 @@ import RateList from './page/RateList';
 import RateAdd from './page/RateAdd';
 import RateDetail from './page/RateDetail';
 import Footer from './components/Footer';
-import CommonDetail from './page/CommonDetail';
+import NotFound from './page/NotFound';
+import ValidateId from './components/ValidateId';
 
 const App = () => {
   return (
@@ -34,10 +35,7 @@ const App = () => {
         />
         <Route path="/shareAdd" element={<ShareAdd />} />
         <Route path="/shareEdit/:id" element={<ShareEdit />} />
-        <Route
-          path="/shareDetail/:id"
-          element={<CommonDetail endpoint="borrows" />}
-        />
+        <Route path="/shareDetail/:id" element={<ValidateId />} />
         <Route
           path="/reqList"
           element={
@@ -50,16 +48,14 @@ const App = () => {
         />
         <Route path="/reqAdd" element={<ReqAdd />} />
         <Route path="/reqEdit/:id" element={<ReqEdit />} />
-        <Route
-          path="/reqDetail/:id"
-          element={<CommonDetail endpoint="requests" />}
-        />
+        <Route path="/reqDetail/:id" element={<ValidateId />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypageEdit" element={<MyPageEdit />} />
         <Route path="/rateList" element={<RateList />} />
         <Route path="/rateAdd" element={<RateAdd />} />
         <Route path="/rateDetail/:id" element={<RateDetail />} />
         <Route path="/oauth" element={<Callback />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>
