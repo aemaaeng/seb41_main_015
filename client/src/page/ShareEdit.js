@@ -42,11 +42,7 @@ const ShareEdit = (onBookInfoChange) => {
         navigate('/shareList');
       })
       .catch((err) => {
-        Swal.fire(
-          '나눔글 수정 실패',
-          '글 수정이 완료되지 않았습니다.',
-          'warning'
-        );
+        Swal.fire('나눔글 수정 실패', '글 수정에 실패했습니다.', 'warning');
       });
   };
 

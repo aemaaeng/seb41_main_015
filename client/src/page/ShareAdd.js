@@ -33,31 +33,36 @@ const ShareAdd = () => {
       return;
     }
 
-    if (checkTalkUrl(talkUrl)) {
-      instanceAxios
-        .post('/v1/borrows', {
-          bookTitle,
-          author,
-          publisher,
-          talkUrl,
-          title,
-          content,
-          thumbnail,
-        })
-        .then((res) => {
-          Swal.fire(
-            '나눔 글 등록 완료.',
-            '나눔 글이 정상적으로 작성되었습니다.',
-            'success'
-          );
-          navigate('/shareList');
-        })
-        .catch((err) => {
-          Swal.fire('나눔글 작성 실패', '글 등록에 실패했습니다.', 'warning');
-        });
-    } else {
-      Swal.fire('오픈채팅 링크를 확인해주세요');
+    if (!checkTalkUrl(talkUrl)) {
+      Swal.fire(
+        '오픈채팅 링크를 확인해주세요',
+        '링크에는 https:// 혹은 http://가 포함되어야 합니다.',
+        'warning'
+      );
+      return;
     }
+
+    instanceAxios
+      .post('/v1/borrows', {
+        bookTitle,
+        author,
+        publisher,
+        talkUrl,
+        title,
+        content,
+        thumbnail,
+      })
+      .then((res) => {
+        Swal.fire(
+          '나눔 글 등록 완료.',
+          '나눔 글이 정상적으로 작성되었습니다.',
+          'success'
+        );
+        navigate('/shareList');
+      })
+      .catch((err) => {
+        Swal.fire('나눔글 작성 실패', '글 등록에 실패했습니다.', 'warning');
+      });
   };
 
   const handleBookInfoChange = (bookInfo) => {

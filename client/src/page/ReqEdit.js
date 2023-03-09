@@ -44,7 +44,7 @@ const ReqEdit = () => {
         navigate('/ReqList');
       })
       .catch((err) => {
-        Swal.fire('요청글 수정 실패', '글이 수정되지 않았습니다.', 'warning');
+        Swal.fire('요청글 수정 실패', '글 수정에 실패했습니다.', 'warning');
       });
   };
 
