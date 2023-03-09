@@ -135,50 +135,48 @@ const RateAdd = () => {
   const accessToken = sessionStorage.getItem('accessToken');
 
   const handleSubmit = () => {
-    if (accessToken) {
-      // input 유효성 검사
-      if (rating === 0) {
-        Swal.fire(
-          '등록 불가',
-          '평점은 최소 1점 이상 등록 가능합니다',
-          'warning'
-        );
-        return;
-      }
-      if (!bookTitle || bookTitle.length === 0) {
-        Swal.fire('등록 불가', '책 정보를 입력해주세요', 'warning');
-        return;
-      }
-      if (!content || content.length === 0) {
-        Swal.fire('등록 불가', '코멘트를 입력해주세요', 'warning');
-        return;
-      }
-      // 서버 요청
-      instanceAxios
-        .post(
-          `v1/rates?isbn=${isbn}&bookTitle=${bookTitle}&author=${author}&publisher=${publisher}`,
-          {
-            rating,
-            content,
-            thumbnail,
-          }
-        )
-        .then(() => {
-          Swal.fire(
-            '평점 등록 완료',
-            '평점이 정상적으로 등록되었습니다.',
-            'success'
-          );
-          navigate('/rateList');
-        })
-        .catch((err) => console.error(err));
-    } else {
+    if (!accessToken) {
       Swal.fire({
         title: '로그인이 필요한 서비스입니다.',
         text: '로그인 후 이용해주세요.',
         icon: 'warning',
       });
+      return;
     }
+
+    // input 유효성 검사
+    if (rating === 0) {
+      Swal.fire('등록 불가', '평점은 최소 1점 이상 등록 가능합니다', 'warning');
+      return;
+    }
+    if (!bookTitle || bookTitle.length === 0) {
+      Swal.fire('등록 불가', '책 정보를 입력해주세요', 'warning');
+      return;
+    }
+    if (!content || content.length === 0) {
+      Swal.fire('등록 불가', '코멘트를 입력해주세요', 'warning');
+      return;
+    }
+
+    // 서버 요청
+    instanceAxios
+      .post(
+        `v1/rates?isbn=${isbn}&bookTitle=${bookTitle}&author=${author}&publisher=${publisher}`,
+        {
+          rating,
+          content,
+          thumbnail,
+        }
+      )
+      .then(() => {
+        Swal.fire(
+          '평점 등록 완료',
+          '평점이 정상적으로 등록되었습니다.',
+          'success'
+        );
+        navigate('/rateList');
+      })
+      .catch((err) => console.error(err));
   };
 
   const handleCancel = () => {
