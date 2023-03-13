@@ -23,7 +23,7 @@ const StyledHeader = styled.header`
 const SHeaderLogo = styled.a`
   display: flex;
   align-items: center;
-  position: fixed;
+  position: absolute;
   left: 3%;
   .logo {
     fill: #bb2649;
@@ -42,7 +42,7 @@ const SNavContainer = styled.ol`
   flex-direction: row;
   text-align: center;
   padding: 0;
-  position: fixed;
+  position: absolute;
   left: 20%;
   .olItem {
     margin: 5px 33px;
@@ -118,7 +118,7 @@ const SLoginBtn = styled.button`
   color: #bb2649;
   border: 1px solid #bb2649;
   border-radius: 20px;
-  position: fixed;
+  position: absolute;
   right: 3%;
   :hover {
     color: #ffffff;
