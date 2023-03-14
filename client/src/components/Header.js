@@ -20,7 +20,7 @@ const StyledHeader = styled.header`
   z-index: 2;
 `;
 
-const SHeaderLogo = styled.a`
+const SHeaderLogo = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
@@ -33,6 +33,9 @@ const SHeaderLogo = styled.a`
       font-size: 15px;
       width: 140px;
     }
+  }
+  &:hover {
+    cursor: pointer;
   }
 `;
 
@@ -217,7 +220,7 @@ const Header = () => {
 
   return (
     <StyledHeader>
-      <SHeaderLogo href="/">
+      <SHeaderLogo onClick={() => navigate('/')}>
         <Logo className="logo" />
       </SHeaderLogo>
       <SNavContainer>
