@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import DetailForm from '../components/DetailForm';
 import Swal from 'sweetalert2';
+import Loading from '../components/Loading';
 
 const CommonDetail = ({ endpoint, id }) => {
   const [data, setData] = useState({});
   const [comment, setComment] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const url = 'https://serverbookvillage.kro.kr/';
 
   useEffect(() => {
@@ -15,6 +17,7 @@ const CommonDetail = ({ endpoint, id }) => {
       .then((res) => {
         // 게시글 정보
         setData(res.data.data);
+        setIsLoading(false);
 
         const comments =
           endpoint === 'borrows'
@@ -35,7 +38,16 @@ const CommonDetail = ({ endpoint, id }) => {
 
   return (
     <>
-      <DetailForm data={data} endpoint={endpoint} id={id} comments={comment} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <DetailForm
+          data={data}
+          endpoint={endpoint}
+          id={id}
+          comments={comment}
+        />
+      )}
     </>
   );
 };
