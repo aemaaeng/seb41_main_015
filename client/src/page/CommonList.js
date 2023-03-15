@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import ListHigh from '../components/ListHigh';
 import BookList from '../components/BookList';
 import Paging from '../components/Paging';
+import Loading from '../components/Loading';
 
 const SListContainer = styled.div`
   margin: 0px 190px;
@@ -24,6 +25,7 @@ const CommonList = (props) => {
   const [keyword, setKeyword] = useState('');
   const [type, setType] = useState('');
   const [isSearchMode, setIsSearchMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // 한 페이지에 들어갈 데이터 (페이지가 바뀔 때마다 get으로 받아옴)
   const [items, setItems] = useState([]);
@@ -39,6 +41,7 @@ const CommonList = (props) => {
     setPage(1);
     setIsSearchMode(false);
     setItems([]);
+    setIsLoading(true);
 
     // 첫 페이지 데이터 불러오기
     axios
@@ -46,10 +49,12 @@ const CommonList = (props) => {
       .then((res) => {
         setItems(res.data.data);
         setCount(res.data.pageInfo.totalElements);
+        setIsLoading(false);
       })
       .catch((err) => {
         setItems([]);
         setCount(0);
+        setIsLoading(false);
         console.log(err);
         Swal.fire('데이터 로딩 실패', '데이터 로딩에 실패했습니다.', 'warning');
       });
@@ -156,23 +161,31 @@ const CommonList = (props) => {
   };
 
   return (
-    <SListContainer>
-      <ListHigh
-        title={title}
-        route={route}
-        keyword={keyword}
-        handleKeyword={handleKeyword}
-        handleSearch={handleSearch}
-        handleOption={handleOption}
-      />
-      <BookList data={items} route={route} />
-      <Paging
-        page={page}
-        count={count}
-        perPage={PER_PAGE}
-        handlePageChange={handlePageChange}
-      />
-    </SListContainer>
+    <>
+      <SListContainer>
+        <ListHigh
+          title={title}
+          route={route}
+          keyword={keyword}
+          handleKeyword={handleKeyword}
+          handleSearch={handleSearch}
+          handleOption={handleOption}
+        />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <BookList data={items} route={route} />
+            <Paging
+              page={page}
+              count={count}
+              perPage={PER_PAGE}
+              handlePageChange={handlePageChange}
+            />
+          </>
+        )}
+      </SListContainer>
+    </>
   );
 };
 
