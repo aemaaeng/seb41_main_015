@@ -23,12 +23,9 @@ const CommonDetail = ({ endpoint, id }) => {
           endpoint === 'borrows'
             ? res.data.data.borrowComments
             : res.data.data.requestComments;
-        const sortComments = comments;
         //댓글 최신순 정렬
-        sortComments.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-        setComment(sortComments);
+        comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setComment(comments);
       })
       .catch((err) => {
         Swal.fire('데이터 로딩 실패', '데이터 로딩에 실패했습니다.', 'warning');
