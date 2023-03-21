@@ -1,21 +1,21 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './page/Home';
-import CommonList from './page/CommonList';
-import Header from './components/Header';
-import ShareAdd from './page/ShareAdd';
-import ShareEdit from './page/ShareEdit';
-import ReqAdd from './page/ReqAdd';
-import ReqEdit from './page/ReqEdit';
-import MyPage from './page/MyPage';
-import MyPageEdit from './page/MyPageEdit';
-import Callback from './page/Callback';
-import RateList from './page/RateList';
-import RateAdd from './page/RateAdd';
-import RateDetail from './page/RateDetail';
-import Footer from './components/Footer';
-import NotFound from './page/NotFound';
-import ValidateId from './components/ValidateId';
+import Home from './pages/Home';
+import CommonList from './pages/CommonList';
+import Header from './components/common/Header';
+import ShareAdd from './pages/ShareAdd';
+import ShareEdit from './pages/ShareEdit';
+import ReqAdd from './pages/ReqAdd';
+import ReqEdit from './pages/ReqEdit';
+import MyPage from './pages/MyPage';
+import MyPageEdit from './pages/MyPageEdit';
+import Callback from './pages/Callback';
+import RateList from './pages/RateList';
+import RateAdd from './pages/RateAdd';
+import RateDetail from './pages/RateDetail';
+import Footer from './components/common/Footer';
+import NotFound from './pages/NotFound';
+import ValidateId from './components/common/ValidateId';
 
 const App = () => {
   return (
