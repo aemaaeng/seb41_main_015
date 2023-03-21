@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCookie, setCookie, removeCookie } from '../../util/cookie/cookie';
-import instanceAxios from '../../reissue/InstanceAxios';
+import { getCookie, setCookie, removeCookie } from '../../util/cookie';
+import instanceAxios from '../../util/InstanceAxios';
 
 const sessionAccessToken = sessionStorage.getItem('accessToken');
 const cookieRefreshToken = getCookie('refreshToken');
