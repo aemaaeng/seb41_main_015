@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import RateItems from '../components/rate/RateItems';
 import { useNavigate } from 'react-router-dom';
 import Paging from '../components/common/Paging';
+import Loading from '../components/common/Loading';
 
 const StyledRateList = styled.div`
   margin: 0 190px;
@@ -71,6 +72,7 @@ const RateList = (props) => {
   const [bookItems, setBookItems] = useState([]);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const PER_PAGE = 15;
 
   const navigate = useNavigate();
@@ -80,6 +82,7 @@ const RateList = (props) => {
     axios
       .get(url + `v1/books?page=0&size=${PER_PAGE}&sort=createdAt%2Cdesc`)
       .then((res) => {
+        setIsLoading(false);
         setBookItems(res.data.data);
         setCount(res.data.pageInfo.totalElements);
       })
@@ -121,7 +124,7 @@ const RateList = (props) => {
           </button>
         </div>
       </div>
-      <RateItems data={bookItems} />
+      {isLoading ? <Loading /> : <RateItems data={bookItems} />}
       <Paging
         count={count}
         page={page}
