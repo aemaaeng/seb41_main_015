@@ -16,6 +16,9 @@ import RateDetail from './pages/RateDetail';
 import Footer from './components/common/Footer';
 import NotFound from './pages/NotFound';
 import ValidateId from './components/common/ValidateId';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'https://serverbookvillage.kro.kr/';
 
 const App = () => {
   return (

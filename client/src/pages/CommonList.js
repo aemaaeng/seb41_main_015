@@ -19,8 +19,6 @@ const CommonList = (props) => {
   const { headTitle, endpoint, route } = props;
   const { pathname } = useLocation();
 
-  const url = 'https://serverbookvillage.kro.kr/';
-
   const [title, setTitle] = useState('');
   const [keyword, setKeyword] = useState('');
   const [type, setType] = useState('');
@@ -45,7 +43,7 @@ const CommonList = (props) => {
 
     // 첫 페이지 데이터 불러오기
     axios
-      .get(url + `v1/${endpoint}?page=0&size=${PER_PAGE}&sort=createdAt%2Cdesc`)
+      .get(`v1/${endpoint}?page=0&size=${PER_PAGE}&sort=createdAt%2Cdesc`)
       .then((res) => {
         setItems(res.data.data);
         setCount(res.data.pageInfo.totalElements);
@@ -63,10 +61,7 @@ const CommonList = (props) => {
   const getDatabyPage = async (page) => {
     try {
       const res = await axios.get(
-        url +
-          `v1/${endpoint}?page=${
-            page - 1
-          }&size=${PER_PAGE}&sort=createdAt%2Cdesc`
+        `v1/${endpoint}?page=${page - 1}&size=${PER_PAGE}&sort=createdAt%2Cdesc`
       );
       const data = res.data;
       return data;
@@ -78,10 +73,9 @@ const CommonList = (props) => {
   const getSearchDatabyPage = async (keyword, type, page) => {
     try {
       const res = await axios.get(
-        url +
-          `v1/${endpoint}/search?field=${type}&keyword=${keyword}&page=${
-            page - 1
-          }&size=${PER_PAGE}&sort=createdAt%2Cdesc`
+        `v1/${endpoint}/search?field=${type}&keyword=${keyword}&page=${
+          page - 1
+        }&size=${PER_PAGE}&sort=createdAt%2Cdesc`
       );
       const data = res.data;
       return data;
@@ -140,8 +134,7 @@ const CommonList = (props) => {
 
       axios
         .get(
-          url +
-            `v1/${endpoint}/search?field=${type}&keyword=${keyword}&page=0&size=${PER_PAGE}&sort=createdAt%2Cdesc`
+          `v1/${endpoint}/search?field=${type}&keyword=${keyword}&page=0&size=${PER_PAGE}&sort=createdAt%2Cdesc`
         )
         .then((res) => {
           setIsSearchMode(true);

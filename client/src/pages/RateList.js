@@ -76,11 +76,10 @@ const RateList = (props) => {
   const PER_PAGE = 15;
 
   const navigate = useNavigate();
-  const url = 'https://serverbookvillage.kro.kr/';
 
   useEffect(() => {
     axios
-      .get(url + `v1/books?page=0&size=${PER_PAGE}&sort=createdAt%2Cdesc`)
+      .get(`v1/books?page=0&size=${PER_PAGE}&sort=createdAt%2Cdesc`)
       .then((res) => {
         setIsLoading(false);
         setBookItems(res.data.data);
@@ -96,7 +95,7 @@ const RateList = (props) => {
   const getDatabyPage = async (page) => {
     try {
       const res = await axios.get(
-        url + `v1/books?page=${page - 1}&size=${PER_PAGE}&sort=createdAt%2Cdesc`
+        `v1/books?page=${page - 1}&size=${PER_PAGE}&sort=createdAt%2Cdesc`
       );
       const data = res.data;
       return data;

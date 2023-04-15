@@ -110,12 +110,11 @@ const Ranking = () => {
   const [bookStarRank, setBookStarRank] = useState([]);
   const [bookReqRank, setBookReqRank] = useState([]);
   const [bookBorRank, setBookBorRank] = useState([]);
-  const url = 'https://serverbookvillage.kro.kr/';
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(url + `v1/books?page=0&size=5&sort=avgRate%2Cdesc`)
+      .get('v1/books?page=0&size=5&sort=avgRate%2Cdesc')
       .then((res) => {
         setBookStarRank(res.data.data);
       })
@@ -123,7 +122,7 @@ const Ranking = () => {
         console.log(err);
       });
     axios
-      .get(url + `v1/requests/rank`)
+      .get('v1/requests/rank')
       .then((res) => {
         setBookReqRank(res.data.data);
       })
@@ -131,7 +130,7 @@ const Ranking = () => {
         console.log(err);
       });
     axios
-      .get(url + `v1/borrows/rank`)
+      .get('v1/borrows/rank')
       .then((res) => {
         setBookBorRank(res.data.data);
       })
