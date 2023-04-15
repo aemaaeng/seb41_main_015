@@ -8,12 +8,11 @@ const CommonDetail = ({ endpoint, id }) => {
   const [data, setData] = useState({});
   const [comment, setComment] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const url = 'https://serverbookvillage.kro.kr/';
 
   useEffect(() => {
     window.scrollTo(0, 0);
     axios
-      .get(url + `v1/${endpoint}/${id}`)
+      .get(`v1/${endpoint}/${id}`)
       .then((res) => {
         // 게시글 정보
         setData(res.data.data);

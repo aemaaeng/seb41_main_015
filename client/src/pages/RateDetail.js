@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { ReactComponent as BookStar } from '../images/bookStar.svg';
 import RateModal from '../components/rate/RateModal';
 import RateComment from '../components/rate/RateComment';
+import Swal from 'sweetalert2';
 
 const SDetailLayout = styled.main`
   padding: 24px;
@@ -140,7 +141,7 @@ const SStarIcon = styled.div`
 const RateDetail = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
-  const [rateComment, serRateComment] = useState([]);
+  const [rateComment, setRateComment] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -151,25 +152,21 @@ const RateDetail = () => {
     setIsModalOpen(false);
   };
 
-  const url = 'https://serverbookvillage.kro.kr';
-
   useEffect(() => {
     window.scrollTo(0, 0);
-    const rateData = async () => {
-      try {
-        const res = await axios.get(url + `/v1/books/${id}`);
+    axios
+      .get(`/v1/books/${id}`)
+      .then((res) => {
         setData(res.data.data);
+        const comments = res.data.data.rates;
         //댓글 최신순 정렬
-        const sortRateComments = res.data.data.rates;
-        sortRateComments.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-        serRateComment(sortRateComments);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    rateData();
+        comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setRateComment(comments);
+      })
+      .catch((err) => {
+        Swal.fire('데이터 로딩 실패', '데이터 로딩에 실패했습니다.', 'warning');
+        console.error(err);
+      });
   }, []);
 
   return (
