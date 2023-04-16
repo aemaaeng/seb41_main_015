@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BookAddModal from '../common/BookAddModal';
 import axios from 'axios';
-import Swal from 'sweetalert2';
+import { showWarningAlert, showConfirmAlert } from '../common/Alert';
 
 const StyledShareForm = styled.div`
   .title {
@@ -184,24 +184,18 @@ const ShareForm = (props) => {
       const fileSize = e.target.files[0].size;
 
       if (fileSize > maxSize) {
-        Swal.fire(
+        showWarningAlert(
           '책 표지 등록 실패',
-          '첨부 파일의 사이즈는 3MB 이내로 등록 가능합니다.',
-          'warning'
+          '첨부 파일의 사이즈는 3MB 이내로 등록 가능합니다'
         );
       }
     }
   };
 
   const goBack = () => {
-    Swal.fire({
+    showConfirmAlert({
       title: '작성을 취소하시겠습니까?',
       text: '작성 중인 내용은 저장되지 않습니다',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#bb2649',
-      confirmButtonText: '확인',
-      cancelButtonText: '취소',
     }).then((res) => {
       if (res.isConfirmed) {
         navigate(-1);

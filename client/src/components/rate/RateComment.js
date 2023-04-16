@@ -5,6 +5,11 @@ import { ReactComponent as BookStar } from '../../images/bookStar.svg';
 import instanceAxios from '../../util/InstanceAxios';
 import Swal from 'sweetalert2';
 import { prettyDate } from '../../util/dateparse';
+import {
+  showNormalAlert,
+  showWarningAlert,
+  showConfirmAlert,
+} from '../common/Alert.js';
 
 const SCommentWrap = styled.div`
   margin: 0px 10%;
@@ -115,9 +120,10 @@ const RateComment = ({ data }) => {
         content: editInput,
       })
       .then(() => {
-        Swal.fire({
+        showConfirmAlert({
           title: '평점이 정상적으로 수정되었습니다.',
           icon: 'success',
+          showCancelButton: false,
           confirmButtonText: '확인',
         }).then((res) => {
           if (res.isConfirmed) {
@@ -127,7 +133,7 @@ const RateComment = ({ data }) => {
       })
       .catch((err) => {
         console.log(err);
-        Swal.fire('수정 실패', '평점 수정에 실패했습니다.', 'warning');
+        showWarningAlert('평점 수정 실패', '평점 수정에 실패했습니다');
       });
   };
 
@@ -137,22 +143,18 @@ const RateComment = ({ data }) => {
 
   const handleDeleteRate = (rateId) => {
     // 삭제하기 전에 한 번 물어보기
-    Swal.fire({
+    showConfirmAlert({
       title: '평점을 삭제하시겠습니까?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#bb2649',
-      confirmButtonText: '확인',
-      cancelButtonText: '취소',
     }).then((res) => {
       if (res.isConfirmed) {
         instanceAxios.delete(`v1/rates/${rateId}`).then(() => {
-          Swal.fire('평점이 삭제되었습니다');
+          showNormalAlert('평점이 삭제되었습니다');
           window.location.reload();
         });
       }
     });
   };
+
   return (
     <>
       {data && (

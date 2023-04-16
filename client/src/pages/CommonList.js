@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import styled from 'styled-components';
 import ListHigh from '../components/common/ListHigh';
 import BookList from '../components/common/BookList';
 import Paging from '../components/common/Paging';
 import Loading from '../components/common/Loading';
+import { showFailedToFetch } from '../components/common/Alert';
 
 const SListContainer = styled.div`
   margin: 0px 190px;
@@ -54,7 +54,7 @@ const CommonList = (props) => {
         setCount(0);
         setIsLoading(false);
         console.log(err);
-        Swal.fire('데이터 로딩 실패', '데이터 로딩에 실패했습니다.', 'warning');
+        showFailedToFetch();
       });
   }, [pathname]);
 
@@ -143,11 +143,7 @@ const CommonList = (props) => {
           setPage(1);
         })
         .catch((err) => {
-          Swal.fire(
-            '데이터 로딩 실패',
-            '데이터 로딩에 실패했습니다.',
-            'warning'
-          );
+          showFailedToFetch();
           console.error(err);
         });
     }
