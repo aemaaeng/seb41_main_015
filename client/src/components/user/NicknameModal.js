@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import Swal from 'sweetalert2';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import instanceAxios from '../../util/InstanceAxios';
 import { setExisting } from '../../redux/slice/userSlice';
+import { showWarningAlert, showSuccessAlert } from '../common/Alert';
 
 const SModalBackground = styled.div`
   position: fixed;
@@ -134,10 +134,9 @@ const NicknameModal = ({ isModalOpen, handleCloseModal }) => {
         .then(() => {
           handleCloseModal();
           dispatch(setExisting({ displayName: nickname }));
-          Swal.fire(
-            '닉네임 설정이 완료되었습니다',
-            '북빌리지에 오신 것을 환영합니다!',
-            'success'
+          showSuccessAlert(
+            '닉네임 설정이 왼료되었습니다',
+            '북빌리지에 오신 것을 환영합니다!'
           );
         })
         .catch((err) => {
@@ -145,11 +144,7 @@ const NicknameModal = ({ isModalOpen, handleCloseModal }) => {
           if (err.response.status === 409) {
             setErrorMessage('이미 사용 중인 닉네임입니다.');
           } else {
-            Swal.fire(
-              '닉네임 등록 실패',
-              '닉네임 설정에 실패했습니다',
-              'warning'
-            );
+            showWarningAlert('닉네임 설정 실패', '닉네임 설정에 실패했습니다');
             console.error(err);
           }
         });

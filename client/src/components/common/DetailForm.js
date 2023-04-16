@@ -7,7 +7,7 @@ import instanceAxios from '../../util/InstanceAxios';
 import { prettyDate } from '../../util/dateparse';
 import { ReactComponent as KakaoFill } from '../../images/kakaofill.svg';
 import { ReactComponent as Eye } from '../../images/eye.svg';
-import Swal from 'sweetalert2';
+import { showNormalAlert, showConfirmAlert } from './Alert';
 
 const SDetailLayout = styled.main`
   padding: 24px;
@@ -196,23 +196,18 @@ const DetailForm = ({ data, endpoint, id, comments }) => {
   // 삭제 버튼 핸들러
   const handleDelete = () => {
     // 서버에 삭제 요청 보내기 (instanceAxios 쓰기)
-    Swal.fire({
+    showConfirmAlert({
       title: '정말로 삭제하시겠습니까?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#bb2649',
-      confirmButtonText: '확인',
-      cancelButtonText: '취소',
     }).then((res) => {
       if (res.isConfirmed) {
         instanceAxios
           .delete(`v1/${endpoint}/${id}`)
           .then(() => {
-            Swal.fire('글이 삭제되었습니다.');
+            showNormalAlert('글이 삭제되었습니다');
             navigate(-1);
           })
           .catch((err) => {
-            Swal.fire('삭제에 실패했습니다');
+            showNormalAlert('글 삭제에 실패했습니다');
             console.error(err);
           });
       }

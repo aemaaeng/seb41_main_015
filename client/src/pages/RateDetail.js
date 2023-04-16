@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { ReactComponent as BookStar } from '../images/bookStar.svg';
 import RateModal from '../components/rate/RateModal';
 import RateComment from '../components/rate/RateComment';
-import Swal from 'sweetalert2';
+import { showFailedToFetch } from '../components/common/Alert';
 
 const SDetailLayout = styled.main`
   padding: 24px;
@@ -164,7 +164,7 @@ const RateDetail = () => {
         setRateComment(comments);
       })
       .catch((err) => {
-        Swal.fire('데이터 로딩 실패', '데이터 로딩에 실패했습니다.', 'warning');
+        showFailedToFetch();
         console.error(err);
       });
   }, []);

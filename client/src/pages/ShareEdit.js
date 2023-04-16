@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import ShareForm from '../components/share/ShareForm';
 import instanceAxios from '../util/InstanceAxios';
+import { showSuccessAlert, showWarningAlert } from '../components/common/Alert';
 
 const ShareEdit = (onBookInfoChange) => {
   const navigate = useNavigate();
@@ -34,15 +35,14 @@ const ShareEdit = (onBookInfoChange) => {
         thumbnail,
       })
       .then((res) => {
-        Swal.fire(
+        showSuccessAlert(
           '나눔글 수정 완료',
-          '글 수정이 정상적으로 수정되었습니다.',
-          'success'
+          '나눔글이 정상적으로 수정되었습니다'
         );
         navigate('/shareList');
       })
       .catch((err) => {
-        Swal.fire('나눔글 수정 실패', '글 수정에 실패했습니다.', 'warning');
+        showWarningAlert('나눔글 수정 실패', '나눔글 수정에 실패했습니다');
       });
   };
 

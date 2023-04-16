@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 import instanceAxios from '../../util/InstanceAxios';
-import Swal from 'sweetalert2';
 import { useState } from 'react';
 import { prettyDate } from '../../util/dateparse';
 import { useNavigate } from 'react-router-dom';
+import {
+  showNormalAlert,
+  showWarningAlert,
+  showSuccessAlert,
+  showRequireLogin,
+  showConfirmAlert,
+} from './Alert';
 
 const SCommentForm = styled.div`
   margin: 30px auto;
@@ -128,11 +134,7 @@ const Comment = ({ endpoint, comments, id }) => {
     setContent(e.target.value);
     const text_length = e.target.value.length;
     if (text_length > 60) {
-      Swal.fire(
-        '글자 수 초과',
-        '댓글은 60자 이상 작성 할 수 없습니다',
-        'warning'
-      );
+      showWarningAlert('글자 수 초과', '댓글은 60자 이상 작성할 수 없습니다.');
     }
   };
 
@@ -155,33 +157,20 @@ const Comment = ({ endpoint, comments, id }) => {
           .then((res) => {
             setContent(res.data.data.content);
             window.location.reload();
-            Swal.fire(
-              '댓글 등록',
-              '정상적으로 댓글이 등록되었습니다',
-              'success'
-            );
+            showSuccessAlert('댓글 등록', '댓글이 정상적으로 등록되었습니다');
           })
           .catch((err) => {
-            Swal.fire(
-              '댓글 등록 실패',
-              '댓글등록이 이루어지지 않았습니다.',
-              'warning'
-            );
+            showWarningAlert('댓글 등록 실패', '댓글 등록에 실패했습니다');
             console.error(err);
           });
       } else {
-        Swal.fire(
-          '내용을 입력하십시오',
-          '최소 1글자 이상 작성해주세요',
-          'warning'
+        showWarningAlert(
+          '내용을 입력하세요',
+          '최소 1글자 이상 작성해야 합니다'
         );
       }
     } else {
-      Swal.fire(
-        '로그인이 필요한 서비스입니다',
-        '로그인 후 이용해주세요.',
-        'warning'
-      );
+      showRequireLogin();
     }
   };
 
@@ -196,51 +185,29 @@ const Comment = ({ endpoint, comments, id }) => {
           window.location.reload();
         })
         .catch(() => {
-          Swal.fire(
-            '댓글수정 실패',
-            '댓글수정이 이루어지지 않았습니다.',
-            'warning'
-          );
+          showWarningAlert('댓글 수정 실패', '댓글 수정에 실패했습니다');
         });
     } else {
       console.error('err');
-      Swal.fire(
-        '내용을 입력하십시오',
-        '최소 1글자 이상 작성해주세요',
-        'warning'
-      );
+      showWarningAlert('내용을 입력하세요', '최소 1글자 이상 작성해야 합니다');
     }
   };
 
   //댓글 삭제
   const handleClickDeleteComment = (commentId) => {
-    Swal.fire({
+    showConfirmAlert({
       title: '작성을 취소하시겠습니까?',
       text: '작성 중인 내용은 저장되지 않습니다',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#bb2649',
-      confirmButtonText: '확인',
-      cancelButtonText: '취소',
-      // reverseButtons: true, //버튼 순서 거꾸로
     }).then((res) => {
       if (res.isConfirmed) {
         instanceAxios
           .delete(`/v1/${endpoint}/comments/${commentId}`)
           .then(() => {
             window.location.reload();
-            Swal.fire(
-              '댓글 삭제 성공',
-              '정상적으로 댓글이 삭제되었습니다',
-              'success'
-            );
+            showNormalAlert('댓글이 정상적으로 삭제되었습니다.');
           })
           .catch(() => {
-            Swal.fire(
-              '댓글 삭제 실패',
-              '댓글삭제가 정상적으로 이루어지지 않았습니다.',
-              'warning'
-            );
+            showNormalAlert('댓글 삭제에 실패했습니다.');
           });
       }
     });
@@ -249,23 +216,7 @@ const Comment = ({ endpoint, comments, id }) => {
   const handleClickCancelModify = () => {
     setContentForm('');
   };
-  //수정 취소 확인 함수
-  const handleCancel = () => {
-    Swal.fire({
-      title: '작성을 취소하시겠습니까?',
-      text: '작성 중인 내용은 저장되지 않습니다',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#bb2649',
-      confirmButtonText: '확인',
-      cancelButtonText: '취소',
-      // reverseButtons: true, //버튼 순서 거꾸로
-    }).then((res) => {
-      if (res.isConfirmed) {
-        navigate(-1);
-      }
-    });
-  };
+
   return (
     <SCommentForm>
       <SCommentsInfo>댓글 {comments.length}</SCommentsInfo>

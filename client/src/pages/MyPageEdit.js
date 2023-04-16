@@ -4,6 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import instanceAxios from '../util/InstanceAxios';
 import axios from 'axios';
+import {
+  showWarningAlert,
+  showSuccessAlert,
+  showFailedToFetch,
+  showConfirmAlert,
+} from '../components/common/Alert';
 
 const SWrapEdit = styled.div`
   display: flex;
@@ -230,15 +236,9 @@ const MyPageEdit = () => {
 
   //수정 취소 확인 함수
   const handleCancel = () => {
-    Swal.fire({
+    showConfirmAlert({
       title: '작성을 취소하시겠습니까?',
       text: '작성 중인 내용은 저장되지 않습니다',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#bb2649',
-      confirmButtonText: '확인',
-      cancelButtonText: '취소',
-      // reverseButtons: true, //버튼 순서 거꾸로
     }).then((res) => {
       if (res.isConfirmed) {
         navigate(-1);
@@ -258,18 +258,13 @@ const MyPageEdit = () => {
       .then(() => {
         navigate('/mypage');
         window.location.reload();
-        Swal.fire(
-          '프로필 수정 완료.',
-          '프로필 수정이 정상적으로 이루어졌습니다.',
-          'success'
+        showSuccessAlert(
+          '프로필 수정 완료',
+          '프로필이 정상적으로 수정되었습니다'
         );
       })
       .catch((err) => {
-        Swal.fire(
-          '프로필 수정 실패',
-          '수정이 정상적으로 등록되지 않았습니다.',
-          'warning'
-        );
+        showWarningAlert('프로필 수정 실패', '프로필 수정에 실패했습니다');
         console.error(err);
       });
   };
@@ -286,12 +281,8 @@ const MyPageEdit = () => {
         setImgUrl(res.data.data.imgUrl);
       } catch (error) {
         console.error(error);
+        showFailedToFetch();
         navigate('/');
-        Swal.fire(
-          '죄송합니다',
-          '회원님의 정보를 가져오는데 실패했습니다.',
-          'warning'
-        );
       }
     };
     editData();
@@ -299,14 +290,10 @@ const MyPageEdit = () => {
 
   //회원탈퇴
   const handleClickQuit = () => {
-    Swal.fire({
+    showConfirmAlert({
       title: '회원탈퇴를 진행하시겠습니까?',
       text: '회원탈퇴 후 로그인이 불가하니 신중하게 생각해주세요.',
-      icon: 'warning',
-      showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
-      confirmButtonColor: '#bb2649', // confrim 버튼 색깔 지정
-      confirmButtonText: '탈퇴', // confirm 버튼 텍스트 지정
-      cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+      confirmButtonText: '탈퇴',
     }).then((res) => {
       if (res.isConfirmed) {
         // 만약 모달창에서 confirm 버튼을 눌렀다면
@@ -314,10 +301,9 @@ const MyPageEdit = () => {
           sessionStorage.clear();
           navigate('/');
           window.location.reload();
-          Swal.fire(
+          showSuccessAlert(
             '정상적으로 회원탈퇴가 처리되었습니다.',
-            '이용해주셔서 감사합니다',
-            'success'
+            '이용해주셔서 감사합니다'
           );
         });
       }

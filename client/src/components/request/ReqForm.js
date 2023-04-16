@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BookAddModal from '../common/BookAddModal';
-import Swal from 'sweetalert2';
+import { showConfirmAlert } from '../common/Alert';
 
 const StyledReqForm = styled.div`
   .title {
@@ -125,14 +125,9 @@ const ReqForm = (props) => {
   };
 
   const goBack = () => {
-    Swal.fire({
+    showConfirmAlert({
       title: '작성을 취소하시겠습니까?',
       text: '작성 중인 내용은 저장되지 않습니다',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#bb2649',
-      confirmButtonText: '확인',
-      cancelButtonText: '취소',
     }).then((res) => {
       if (res.isConfirmed) {
         navigate(-1);

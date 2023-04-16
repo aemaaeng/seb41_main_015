@@ -4,6 +4,11 @@ import Swal from 'sweetalert2';
 import instanceAxios from '../util/InstanceAxios';
 import { useNavigate } from 'react-router-dom';
 import { checkTalkUrl } from '../util/checkTalkUrl';
+import {
+  showRequireLogin,
+  showWarningAlert,
+  showSuccessAlert,
+} from '../components/common/Alert';
 
 const ReqAdd = () => {
   const navigate = useNavigate();
@@ -26,19 +31,14 @@ const ReqAdd = () => {
   const handleClickSubmit = () => {
     const accessToken = sessionStorage.getItem('accessToken');
     if (!accessToken) {
-      Swal.fire(
-        '로그인이 필요한 서비스입니다',
-        '로그인 후 이용해주세요.',
-        'warning'
-      );
+      showRequireLogin();
       return;
     }
 
     if (!checkTalkUrl(talkUrl)) {
-      Swal.fire(
+      showWarningAlert(
         '오픈채팅 링크를 확인해주세요',
-        '링크에는 https:// 혹은 http://가 포함되어야 합니다.',
-        'warning'
+        '링크에는 https:// 혹은 http://가 포함되어야 합니다.'
       );
       return;
     }
@@ -54,15 +54,14 @@ const ReqAdd = () => {
         thumbnail,
       })
       .then((res) => {
-        Swal.fire(
-          '요청 글 등록 완료.',
-          '요청 글이 정상적으로 작성되었습니다.',
-          'success'
+        showSuccessAlert(
+          '요청글 등록 완료',
+          '요청글이 정상적으로 등록되었습니다'
         );
         navigate('/reqList');
       })
       .catch((err) => {
-        Swal.fire('요청글 작성 실패', '글 등록에 실패했습니다.', 'warning');
+        showWarningAlert('요청글 작성 실패', '글 등록에 실패했습니다');
       });
   };
 

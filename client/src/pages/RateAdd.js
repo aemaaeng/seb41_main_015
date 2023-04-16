@@ -5,6 +5,12 @@ import BookAddModal from '../components/common/BookAddModal';
 import instanceAxios from '../util/InstanceAxios';
 import { RateStar } from '../components/rate/RateStar';
 import Swal from 'sweetalert2';
+import {
+  showRequireLogin,
+  showSuccessAlert,
+  showConfirmAlert,
+  showWarningAlert,
+} from '../components/common/Alert';
 
 const StyledForm = styled.div`
   margin: 0px 190px;
@@ -136,25 +142,21 @@ const RateAdd = () => {
 
   const handleSubmit = () => {
     if (!accessToken) {
-      Swal.fire({
-        title: '로그인이 필요한 서비스입니다.',
-        text: '로그인 후 이용해주세요.',
-        icon: 'warning',
-      });
+      showRequireLogin();
       return;
     }
 
     // input 유효성 검사
     if (rating === 0) {
-      Swal.fire('등록 불가', '평점은 최소 1점 이상 등록 가능합니다', 'warning');
+      showWarningAlert('등록 불가', '평점은 최소 1점 이상 등록 가능합니다');
       return;
     }
     if (!bookTitle || bookTitle.length === 0) {
-      Swal.fire('등록 불가', '책 정보를 입력해주세요', 'warning');
+      showWarningAlert('등록 불가', '책 정보를 입력해주세요');
       return;
     }
     if (!content || content.length === 0) {
-      Swal.fire('등록 불가', '코멘트를 입력해주세요', 'warning');
+      showWarningAlert('등록 불가', '코멘트를 입력해주세요');
       return;
     }
 
@@ -169,25 +171,16 @@ const RateAdd = () => {
         }
       )
       .then(() => {
-        Swal.fire(
-          '평점 등록 완료',
-          '평점이 정상적으로 등록되었습니다.',
-          'success'
-        );
+        showSuccessAlert('평점 등록 완료', '평점이 정상적으로 등록되었습니다');
         navigate('/rateList');
       })
       .catch((err) => console.error(err));
   };
 
   const handleCancel = () => {
-    Swal.fire({
+    showConfirmAlert({
       title: '작성을 취소하시겠습니까?',
       text: '작성 중인 내용은 저장되지 않습니다',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#bb2649',
-      confirmButtonText: '확인',
-      cancelButtonText: '취소',
     }).then((res) => {
       if (res.isConfirmed) {
         navigate(-1);

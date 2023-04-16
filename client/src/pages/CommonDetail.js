@@ -3,6 +3,7 @@ import axios from 'axios';
 import DetailForm from '../components/common/DetailForm';
 import Swal from 'sweetalert2';
 import Loading from '../components/common/Loading';
+import { showFailedToFetch } from '../components/common/Alert';
 
 const CommonDetail = ({ endpoint, id }) => {
   const [data, setData] = useState({});
@@ -27,7 +28,7 @@ const CommonDetail = ({ endpoint, id }) => {
         setComment(comments);
       })
       .catch((err) => {
-        Swal.fire('데이터 로딩 실패', '데이터 로딩에 실패했습니다.', 'warning');
+        showFailedToFetch();
         console.error(err);
       });
   }, []);

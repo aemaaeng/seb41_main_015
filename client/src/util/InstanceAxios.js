@@ -2,7 +2,7 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { getCookie, removeCookie } from './cookie';
-import Swal from 'sweetalert2';
+import { showWarningAlert } from '../components/common/Alert';
 
 //###1. axios에 특별한 설정을 하기 위해 axios.create 메소드를 이용해서 인스턴스를 만든다.
 const instanceAxios = axios.create({
@@ -61,11 +61,7 @@ instanceAxios.interceptors.request.use(
             })
             .catch((err) => {
               console.error(err);
-              Swal.fire(
-                '죄송합니다',
-                '로그아웃 후 다시 이용해주세요.',
-                'warning'
-              );
+              showWarningAlert('죄송합니다', '로그아웃 후 다시 이용해주세요.');
             });
         };
         token();

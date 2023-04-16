@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Swal from 'sweetalert2';
 import styled from 'styled-components';
 import instanceAxios from '../../util/InstanceAxios';
+import { showConfirmAlert } from '../common/Alert';
 
 const SLabel = styled.label`
   --width: 90px;
@@ -108,13 +108,8 @@ const ToggleSwitch = ({ id, status }) => {
   };
 
   const handleStatusChange = () => {
-    Swal.fire({
+    showConfirmAlert({
       title: '나눔 상태를 변경하시겠습니까?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#bb2649',
-      confirmButtonText: '확인',
-      cancelButtonText: '취소',
     }).then((res) => {
       if (res.isConfirmed) {
         handleToggleClick();

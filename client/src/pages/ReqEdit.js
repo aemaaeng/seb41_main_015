@@ -2,7 +2,7 @@ import ReqForm from '../components/request/ReqForm';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import instanceAxios from '../util/InstanceAxios';
-import Swal from 'sweetalert2';
+import { showSuccessAlert, showWarningAlert } from '../components/common/Alert';
 
 const ReqEdit = () => {
   const navigate = useNavigate();
@@ -36,15 +36,14 @@ const ReqEdit = () => {
         thumbnail,
       })
       .then((res) => {
-        Swal.fire(
+        showSuccessAlert(
           '요청글 수정 완료',
-          '글이 정상적으로 수정되었습니다.',
-          'success'
+          '요청글이 정상적으로 수정되었습니다.'
         );
         navigate('/ReqList');
       })
       .catch((err) => {
-        Swal.fire('요청글 수정 실패', '글 수정에 실패했습니다.', 'warning');
+        showWarningAlert('요청글 수정 실패', '글 수정에 실패했습니다');
       });
   };
 

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import Swal from 'sweetalert2';
 import { useState } from 'react';
 import instanceAxios from '../../util/InstanceAxios';
 import { RateStar } from './RateStar';
+import { showWarningAlert, showRequireLogin } from '../common/Alert';
 
 const SModalBackground = styled.div`
   position: fixed;
@@ -83,7 +83,10 @@ const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
     const sessionAccessToken = sessionStorage.getItem('accessToken');
     if (sessionAccessToken) {
       if (content.length === 0) {
-        Swal.fire('평점 등록 실패', '1글자 이상 작성하셔야 합니다.', 'warning');
+        showWarningAlert(
+          '내용을 입력하세요',
+          '최소 1글자 이상 작성해야 합니다'
+        );
       } else {
         instanceAxios
           .post(
@@ -99,20 +102,15 @@ const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
           })
           .catch((err) => {
             console.error(err);
-            Swal.fire(
-              '이미 평점이 등록되었습니다.',
-              '평점은 한 번만 등록할 수 있습니다.',
-              'warning'
+            showWarningAlert(
+              '이미 등록한 평점이 존재합니다',
+              '평점은 한 번만 등록할 수 있습니다'
             );
             handleCloseModal();
           });
       }
     } else {
-      Swal.fire(
-        '로그인이 필요한 서비스입니다',
-        '로그인 후 이용해주세요.',
-        'warning'
-      );
+      showRequireLogin();
     }
   };
 
