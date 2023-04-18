@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import BookAddModal from '../components/common/BookAddModal';
 import instanceAxios from '../util/InstanceAxios';
 import { RateStar } from '../components/rate/RateStar';
-import Swal from 'sweetalert2';
 import {
   showRequireLogin,
   showSuccessAlert,

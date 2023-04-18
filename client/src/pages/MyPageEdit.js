@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import instanceAxios from '../util/InstanceAxios';
 import axios from 'axios';
 import {

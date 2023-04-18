@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import ShareForm from '../components/share/ShareForm';
 import instanceAxios from '../util/InstanceAxios';
 import { showSuccessAlert, showWarningAlert } from '../components/common/Alert';
