@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import DetailForm from '../components/common/DetailForm';
-import Swal from 'sweetalert2';
 import Loading from '../components/common/Loading';
 import { showFailedToFetch } from '../components/common/Alert';
 

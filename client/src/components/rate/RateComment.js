@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { RateStarSmall } from './RateStar.js';
 import { ReactComponent as BookStar } from '../../images/bookStar.svg';
 import instanceAxios from '../../util/InstanceAxios';
-import Swal from 'sweetalert2';
 import { prettyDate } from '../../util/dateparse';
 import {
   showNormalAlert,

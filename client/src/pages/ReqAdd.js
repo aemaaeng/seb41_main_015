@@ -1,6 +1,5 @@
 import ReqForm from '../components/request/ReqForm';
 import { useState } from 'react';
-import Swal from 'sweetalert2';
 import instanceAxios from '../util/InstanceAxios';
 import { useNavigate } from 'react-router-dom';
 import { checkTalkUrl } from '../util/checkTalkUrl';
