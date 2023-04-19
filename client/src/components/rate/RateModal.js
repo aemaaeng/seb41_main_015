@@ -67,40 +67,39 @@ const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
   };
 
   const handleRateSubmit = () => {
-    // 로그인 회원만 이용가능한 서비스
-    // TODO: 로직 리팩토링
     const sessionAccessToken = sessionStorage.getItem('accessToken');
-    if (sessionAccessToken) {
-      if (content.length === 0) {
-        showWarningAlert(
-          '내용을 입력하세요',
-          '최소 1글자 이상 작성해야 합니다'
-        );
-      } else {
-        instanceAxios
-          .post(
-            `/v1/rates?isbn=${data.isbn}&bookTitle=${data.bookTitle}&author=${data.author}&publisher=${data.publisher}`,
-            {
-              rating,
-              content,
-            }
-          )
-          .then((res) => {
-            handleCloseModal();
-            window.location.reload();
-          })
-          .catch((err) => {
-            console.error(err);
-            showWarningAlert(
-              '이미 등록한 평점이 존재합니다',
-              '평점은 한 번만 등록할 수 있습니다'
-            );
-            handleCloseModal();
-          });
-      }
-    } else {
+
+    // 로그인 회원만 이용가능한 서비스
+    if (!sessionAccessToken) {
       showRequireLogin();
+      return;
     }
+
+    if (content.length === 0) {
+      showWarningAlert('내용을 입력하세요', '최소 1글자 이상 작성해야 합니다');
+      return;
+    }
+
+    instanceAxios
+      .post(
+        `/v1/rates?isbn=${data.isbn}&bookTitle=${data.bookTitle}&author=${data.author}&publisher=${data.publisher}`,
+        {
+          rating,
+          content,
+        }
+      )
+      .then((res) => {
+        handleCloseModal();
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.error(err);
+        showWarningAlert(
+          '이미 등록한 평점이 존재합니다',
+          '평점은 한 번만 등록할 수 있습니다'
+        );
+        handleCloseModal();
+      });
   };
 
   return (
