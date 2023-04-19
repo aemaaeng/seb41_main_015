@@ -147,31 +147,29 @@ const Comment = ({ endpoint, comments, id }) => {
   const handleSubmit = () => {
     //로그인 회원만 이용가능한 서비스
     const sessionAccessToken = sessionStorage.getItem('accessToken');
-    // TODO: 리팩토링하기
-    if (sessionAccessToken) {
-      if (content) {
-        instanceAxios
-          .post(`/v1/${endpoint}/comments/${id}`, {
-            content,
-          })
-          .then((res) => {
-            setContent(res.data.data.content);
-            window.location.reload();
-            showSuccessAlert('댓글 등록', '댓글이 정상적으로 등록되었습니다');
-          })
-          .catch((err) => {
-            showWarningAlert('댓글 등록 실패', '댓글 등록에 실패했습니다');
-            console.error(err);
-          });
-      } else {
-        showWarningAlert(
-          '내용을 입력하세요',
-          '최소 1글자 이상 작성해야 합니다'
-        );
-      }
-    } else {
+
+    if (!sessionAccessToken) {
       showRequireLogin();
+      return;
     }
+    if (!content) {
+      showWarningAlert('내용을 입력하세요', '최소 1글자 이상 작성해야 합니다');
+      return;
+    }
+
+    instanceAxios
+      .post(`/v1/${endpoint}/comments/${id}`, {
+        content,
+      })
+      .then((res) => {
+        setContent(res.data.data.content);
+        window.location.reload();
+        showSuccessAlert('댓글 등록', '댓글이 정상적으로 등록되었습니다');
+      })
+      .catch((err) => {
+        showWarningAlert('댓글 등록 실패', '댓글 등록에 실패했습니다');
+        console.error(err);
+      });
   };
 
   //댓글 수정
