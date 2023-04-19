@@ -29,20 +29,12 @@ const SInputContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 30px 0px 40px 0px;
-  .InputComment {
+  .commentInput {
     width: 100%;
     height: 60px;
     border: 1px solid #aaaaaa;
     border-radius: 5px;
     padding-left: 10px;
-  }
-  .SubmitComment {
-    margin-left: 30px;
-    width: 100px;
-    color: #ffffff;
-    border: 1px solid #bb2649;
-    border-radius: 5px;
-    background-color: #bb2649;
   }
 `;
 
@@ -221,7 +213,7 @@ const Comment = ({ endpoint, comments, id }) => {
       <SInputContainer>
         <input
           type="text"
-          className="InputComment"
+          className="commentInput"
           placeholder="댓글을 남겨보세요"
           onChange={handleChangeContent}
         />
