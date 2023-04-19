@@ -301,6 +301,7 @@ const ShareForm = (props) => {
         <Button
           text={props.page === 'shareAdd' ? '등록' : '수정'}
           onClick={props.onClick}
+          primary
         />
       </SButtonBox>
     </StyledShareForm>
