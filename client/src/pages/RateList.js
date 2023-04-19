@@ -5,6 +5,7 @@ import RateItems from '../components/rate/RateItems';
 import { useNavigate } from 'react-router-dom';
 import Paging from '../components/common/Paging';
 import Loading from '../components/common/Loading';
+import { RegisterButton } from '../components/common/Button';
 
 const StyledRateList = styled.div`
   margin: 0 190px;
@@ -37,32 +38,6 @@ const StyledRateList = styled.div`
         @media screen and (max-width: 555px) {
           display: none;
         }
-      }
-    }
-    .rateBtn {
-      width: 100px;
-      height: 38px;
-      padding: 10px;
-      border: 1px solid #bb2649;
-      border-radius: 3px;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #cf385b;
-      box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.7);
-      font-weight: 500;
-
-      :hover {
-        color: #ffffff;
-        background-color: #bb2649;
-        border: 1px solid #bb2649;
-      }
-      @media screen and (max-width: 1023px) {
-        font-size: 16px;
-        width: 90px;
-        height: 41px;
-        padding: 0;
       }
     }
   }
@@ -117,11 +92,11 @@ const RateList = (props) => {
           <h2>빌리지 사람들의 평점 목록입니다!</h2>
           <p>알고 있는 책에 자유롭게 평점을 매겨보세요!</p>
         </div>
-        <div>
-          <button className="rateBtn" onClick={() => navigate('/rateAdd')}>
-            책 등록하기
-          </button>
-        </div>
+        <RegisterButton
+          rate
+          text="책 등록하기"
+          onClick={() => navigate('/rateAdd')}
+        />
       </div>
       {isLoading ? <Loading /> : <RateItems data={bookItems} />}
       <Paging

@@ -71,7 +71,7 @@ const ReqAdd = () => {
   return (
     <ReqForm
       page="reqAdd"
-      editBtn={handleClickSubmit}
+      onClick={handleClickSubmit}
       inputs={inputs}
       onBookInfoChange={handleBookInfoChange}
     ></ReqForm>

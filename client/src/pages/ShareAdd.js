@@ -71,7 +71,7 @@ const ShareAdd = () => {
     <>
       <ShareForm
         page="shareAdd"
-        editBtn={handleClickSubmit}
+        onClick={handleClickSubmit}
         inputs={inputs}
         onBookInfoChange={handleBookInfoChange}
       />

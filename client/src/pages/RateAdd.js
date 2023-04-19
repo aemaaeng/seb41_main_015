@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BookAddModal from '../components/common/BookAddModal';
+import { Button } from '../components/common/Button';
 import instanceAxios from '../util/InstanceAxios';
 import { RateStar } from '../components/rate/RateStar';
 import {
@@ -87,24 +88,8 @@ const SButtonBox = styled.div`
   justify-content: center;
   margin-bottom: 70px;
   button {
-    width: 15%;
+    width: 15rem;
     height: 35px;
-    border: 1px solid #bb2649;
-    border-radius: 5px;
-  }
-  .cancelBtn {
-    color: #bb2649;
-    background-color: #ffffff;
-    border: 1px solid #bb2649;
-    margin-right: 5%;
-    :hover {
-    }
-  }
-  .submitBtn {
-    color: #ffffff;
-    background-color: #bb2649;
-    :hover {
-    }
   }
 `;
 
@@ -235,12 +220,8 @@ const RateAdd = () => {
         </SInputs>
       </SInputContainer>
       <SButtonBox>
-        <button className="cancelBtn" onClick={handleCancel}>
-          취소
-        </button>
-        <button className="submitBtn" onClick={handleSubmit}>
-          등록
-        </button>
+        <Button text="취소" onClick={handleCancel} cancel />
+        <Button text="등록" onClick={handleSubmit} />
       </SButtonBox>
     </StyledForm>
   );

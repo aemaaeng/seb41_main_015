@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import instanceAxios from '../../util/InstanceAxios';
 import { useState } from 'react';
 import { prettyDate } from '../../util/dateparse';
-import { useNavigate } from 'react-router-dom';
+import { Button } from './Button';
 import {
   showNormalAlert,
   showWarningAlert,
@@ -124,7 +124,6 @@ const SCommentWrap = styled.div`
 const Comment = ({ endpoint, comments, id }) => {
   const [content, setContent] = useState('');
   const [contentForm, setContentForm] = useState('');
-  const navigate = useNavigate();
 
   // 해당하는 유저에게만 댓글을 수정하고 삭제하는 권한주기
   const currentUser = sessionStorage.getItem('displayName');
@@ -145,9 +144,10 @@ const Comment = ({ endpoint, comments, id }) => {
   };
 
   //댓글 등록
-  const commentSubmit = () => {
+  const handleSubmit = () => {
     //로그인 회원만 이용가능한 서비스
     const sessionAccessToken = sessionStorage.getItem('accessToken');
+    // TODO: 리팩토링하기
     if (sessionAccessToken) {
       if (content) {
         instanceAxios
@@ -227,9 +227,7 @@ const Comment = ({ endpoint, comments, id }) => {
           placeholder="댓글을 남겨보세요"
           onChange={handleChangeContent}
         />
-        <button className="SubmitComment" type="sumbit" onClick={commentSubmit}>
-          등록
-        </button>
+        <Button text="등록" onClick={handleSubmit} comment />
       </SInputContainer>
       <SCommentContainer>
         {comments.map((comment) => {
