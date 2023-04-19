@@ -28,6 +28,15 @@ const SButton = styled.button`
           height: 60px;
         `
       : null}
+  ${(props) =>
+    props.wide
+      ? css`
+          margin-top: 20px;
+          width: 300px;
+          height: 35px;
+          border-radius: 2.5px;
+        `
+      : null}
 `;
 
 // 글 작성 페이지 접속 버튼 (나눔하기, 요청하기, 평점 책 등록하기)

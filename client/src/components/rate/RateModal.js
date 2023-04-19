@@ -3,6 +3,7 @@ import { useState } from 'react';
 import instanceAxios from '../../util/InstanceAxios';
 import { RateStar } from './RateStar';
 import { showWarningAlert, showRequireLogin } from '../common/Alert';
+import { Button } from '../common/Button';
 
 const SModalBackground = styled.div`
   position: fixed;
@@ -33,10 +34,12 @@ const SRateModal = styled.div`
     cursor: pointer;
   }
 `;
+
 const SRateInfo = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0;
+  align-items: center;
   text-align: center;
   .rateExplain {
     margin-top: 40px;
@@ -46,15 +49,6 @@ const SRateInfo = styled.div`
     flex-direction: row;
     margin-bottom: 20px;
   }
-  .rateReviewBtn {
-    margin-top: 20px;
-    width: 300px;
-    height: 35px;
-    border: 1px solid #bb2649;
-    border-radius: 2.5px;
-    background-color: #bb2649;
-    color: #ffffff;
-  }
   .rateReviewTextBox {
     border-radius: 2.5px;
     padding: 10px;
@@ -62,12 +56,6 @@ const SRateInfo = styled.div`
     height: 100px;
     width: 300px;
   }
-`;
-const SLimitNumber = styled.div`
-  font-size: 10px !important;
-  text-align: left;
-  margin-left: 50px;
-  color: #bb2649 !important;
 `;
 
 const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
@@ -78,8 +66,9 @@ const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
     setContent(e.target.value);
   };
 
-  const handleClickRateSubmit = () => {
-    //로그인 회원만 이용가능한 서비스
+  const handleRateSubmit = () => {
+    // 로그인 회원만 이용가능한 서비스
+    // TODO: 로직 리팩토링
     const sessionAccessToken = sessionStorage.getItem('accessToken');
     if (sessionAccessToken) {
       if (content.length === 0) {
@@ -122,7 +111,6 @@ const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
             <div className="close" onClick={handleCloseModal}>
               &times;
             </div>
-            {/* 내용 넣기 */}
             <SRateInfo>
               <div className="rateExplain">
                 이 책에 대한 평점과 리뷰를 남겨보세요
@@ -136,15 +124,7 @@ const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
                   placeholder="리뷰를 입력해주세요"
                   onChange={handleChangeRateContent}
                 ></textarea>
-                {content.length < 1 ? (
-                  <SLimitNumber>1글자 이상 입력하십시오</SLimitNumber>
-                ) : null}
-                <button
-                  className="rateReviewBtn"
-                  onClick={handleClickRateSubmit}
-                >
-                  리뷰 남기기
-                </button>
+                <Button text="리뷰 남기기" onClick={handleRateSubmit} wide />
               </div>
             </SRateInfo>
           </SRateModal>

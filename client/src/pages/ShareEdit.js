@@ -65,7 +65,7 @@ const ShareEdit = (onBookInfoChange) => {
     <>
       <ShareForm
         page="shareEdit"
-        editBtn={handleClickEdit}
+        onClick={handleClickEdit}
         inputs={inputs}
         onBookInfoChange={handleBookInfoChange}
       />

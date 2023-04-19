@@ -66,7 +66,7 @@ const ReqEdit = () => {
   return (
     <ReqForm
       page="ReqEdit"
-      editBtn={handleClickSubmit}
+      onClick={handleClickSubmit}
       inputs={inputs}
       onBookInfoChange={handleBookInfoChange}
     />

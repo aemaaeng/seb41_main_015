@@ -146,18 +146,12 @@ const SLogout = styled.div`
   }
 `;
 
-const SLogoutBtn = styled.button`
-  width: 90px;
-  height: 33px;
-  font-size: 16px;
-  font-weight: 600;
+const SLogoutBtn = styled(SLoginBtn)`
   color: #ffffff;
   background-color: #bb2649;
   border: 1px solid #bb2649;
-  border-radius: 20px;
   :hover {
     color: #bb2649;
-    border: 1px solid #bb2649;
     background-color: #ffffff;
   }
 `;
