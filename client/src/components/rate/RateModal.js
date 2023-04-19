@@ -3,6 +3,7 @@ import { useState } from 'react';
 import instanceAxios from '../../util/InstanceAxios';
 import { RateStar } from './RateStar';
 import { showWarningAlert, showRequireLogin } from '../common/Alert';
+import { Button } from '../common/Button';
 
 const SModalBackground = styled.div`
   position: fixed;
@@ -33,10 +34,12 @@ const SRateModal = styled.div`
     cursor: pointer;
   }
 `;
+
 const SRateInfo = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0;
+  align-items: center;
   text-align: center;
   .rateExplain {
     margin-top: 40px;
@@ -46,15 +49,6 @@ const SRateInfo = styled.div`
     flex-direction: row;
     margin-bottom: 20px;
   }
-  .rateReviewBtn {
-    margin-top: 20px;
-    width: 300px;
-    height: 35px;
-    border: 1px solid #bb2649;
-    border-radius: 2.5px;
-    background-color: #bb2649;
-    color: #ffffff;
-  }
   .rateReviewTextBox {
     border-radius: 2.5px;
     padding: 10px;
@@ -62,12 +56,9 @@ const SRateInfo = styled.div`
     height: 100px;
     width: 300px;
   }
-`;
-const SLimitNumber = styled.div`
-  font-size: 10px !important;
-  text-align: left;
-  margin-left: 50px;
-  color: #bb2649 !important;
+  button {
+    margin-top: 20px;
+  }
 `;
 
 const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
@@ -78,40 +69,40 @@ const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
     setContent(e.target.value);
   };
 
-  const handleClickRateSubmit = () => {
-    //로그인 회원만 이용가능한 서비스
+  const handleRateSubmit = () => {
     const sessionAccessToken = sessionStorage.getItem('accessToken');
-    if (sessionAccessToken) {
-      if (content.length === 0) {
-        showWarningAlert(
-          '내용을 입력하세요',
-          '최소 1글자 이상 작성해야 합니다'
-        );
-      } else {
-        instanceAxios
-          .post(
-            `/v1/rates?isbn=${data.isbn}&bookTitle=${data.bookTitle}&author=${data.author}&publisher=${data.publisher}`,
-            {
-              rating,
-              content,
-            }
-          )
-          .then((res) => {
-            handleCloseModal();
-            window.location.reload();
-          })
-          .catch((err) => {
-            console.error(err);
-            showWarningAlert(
-              '이미 등록한 평점이 존재합니다',
-              '평점은 한 번만 등록할 수 있습니다'
-            );
-            handleCloseModal();
-          });
-      }
-    } else {
+
+    // 로그인 회원만 이용가능한 서비스
+    if (!sessionAccessToken) {
       showRequireLogin();
+      return;
     }
+
+    if (content.length === 0) {
+      showWarningAlert('내용을 입력하세요', '최소 1글자 이상 작성해야 합니다');
+      return;
+    }
+
+    instanceAxios
+      .post(
+        `/v1/rates?isbn=${data.isbn}&bookTitle=${data.bookTitle}&author=${data.author}&publisher=${data.publisher}`,
+        {
+          rating,
+          content,
+        }
+      )
+      .then((res) => {
+        handleCloseModal();
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.error(err);
+        showWarningAlert(
+          '이미 등록한 평점이 존재합니다',
+          '평점은 한 번만 등록할 수 있습니다'
+        );
+        handleCloseModal();
+      });
   };
 
   return (
@@ -122,7 +113,6 @@ const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
             <div className="close" onClick={handleCloseModal}>
               &times;
             </div>
-            {/* 내용 넣기 */}
             <SRateInfo>
               <div className="rateExplain">
                 이 책에 대한 평점과 리뷰를 남겨보세요
@@ -136,15 +126,12 @@ const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
                   placeholder="리뷰를 입력해주세요"
                   onChange={handleChangeRateContent}
                 ></textarea>
-                {content.length < 1 ? (
-                  <SLimitNumber>1글자 이상 입력하십시오</SLimitNumber>
-                ) : null}
-                <button
-                  className="rateReviewBtn"
-                  onClick={handleClickRateSubmit}
-                >
-                  리뷰 남기기
-                </button>
+                <Button
+                  text="리뷰 남기기"
+                  onClick={handleRateSubmit}
+                  wide
+                  primary
+                />
               </div>
             </SRateInfo>
           </SRateModal>

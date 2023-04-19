@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import instanceAxios from '../../util/InstanceAxios';
 import { useState } from 'react';
 import { prettyDate } from '../../util/dateparse';
-import { useNavigate } from 'react-router-dom';
+import { Button } from './Button';
 import {
   showNormalAlert,
   showWarningAlert,
@@ -29,20 +29,15 @@ const SInputContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 30px 0px 40px 0px;
-  .InputComment {
+  .commentInput {
     width: 100%;
     height: 60px;
     border: 1px solid #aaaaaa;
     border-radius: 5px;
     padding-left: 10px;
   }
-  .SubmitComment {
-    margin-left: 30px;
-    width: 100px;
-    color: #ffffff;
-    border: 1px solid #bb2649;
-    border-radius: 5px;
-    background-color: #bb2649;
+  button {
+    margin-left: 20px;
   }
 `;
 
@@ -54,7 +49,6 @@ const SCommentContainer = styled.div`
 const SUserContainer = styled.div`
   display: flex;
   align-items: center;
-  /* margin-bottom: 24px; */
   img {
     margin: 0px 10px 0px 5px;
     width: 35px;
@@ -124,7 +118,6 @@ const SCommentWrap = styled.div`
 const Comment = ({ endpoint, comments, id }) => {
   const [content, setContent] = useState('');
   const [contentForm, setContentForm] = useState('');
-  const navigate = useNavigate();
 
   // 해당하는 유저에게만 댓글을 수정하고 삭제하는 권한주기
   const currentUser = sessionStorage.getItem('displayName');
@@ -145,33 +138,32 @@ const Comment = ({ endpoint, comments, id }) => {
   };
 
   //댓글 등록
-  const commentSubmit = () => {
+  const handleSubmit = () => {
     //로그인 회원만 이용가능한 서비스
     const sessionAccessToken = sessionStorage.getItem('accessToken');
-    if (sessionAccessToken) {
-      if (content) {
-        instanceAxios
-          .post(`/v1/${endpoint}/comments/${id}`, {
-            content,
-          })
-          .then((res) => {
-            setContent(res.data.data.content);
-            window.location.reload();
-            showSuccessAlert('댓글 등록', '댓글이 정상적으로 등록되었습니다');
-          })
-          .catch((err) => {
-            showWarningAlert('댓글 등록 실패', '댓글 등록에 실패했습니다');
-            console.error(err);
-          });
-      } else {
-        showWarningAlert(
-          '내용을 입력하세요',
-          '최소 1글자 이상 작성해야 합니다'
-        );
-      }
-    } else {
+
+    if (!sessionAccessToken) {
       showRequireLogin();
+      return;
     }
+    if (!content) {
+      showWarningAlert('내용을 입력하세요', '최소 1글자 이상 작성해야 합니다');
+      return;
+    }
+
+    instanceAxios
+      .post(`/v1/${endpoint}/comments/${id}`, {
+        content,
+      })
+      .then((res) => {
+        setContent(res.data.data.content);
+        window.location.reload();
+        showSuccessAlert('댓글 등록', '댓글이 정상적으로 등록되었습니다');
+      })
+      .catch((err) => {
+        showWarningAlert('댓글 등록 실패', '댓글 등록에 실패했습니다');
+        console.error(err);
+      });
   };
 
   //댓글 수정
@@ -223,13 +215,11 @@ const Comment = ({ endpoint, comments, id }) => {
       <SInputContainer>
         <input
           type="text"
-          className="InputComment"
+          className="commentInput"
           placeholder="댓글을 남겨보세요"
           onChange={handleChangeContent}
         />
-        <button className="SubmitComment" type="sumbit" onClick={commentSubmit}>
-          등록
-        </button>
+        <Button text="등록" onClick={handleSubmit} comment primary />
       </SInputContainer>
       <SCommentContainer>
         {comments.map((comment) => {

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import BookSearch from '../../util/bookApi';
+import { Button } from './Button';
 
 const SModalBackground = styled.div`
   position: fixed;
@@ -54,6 +55,9 @@ const SModalBox = styled.div`
   box-sizing: border-box;
   padding: 5px;
   margin: 10px auto;
+  button {
+    margin-left: 10px;
+  }
   .inputBox {
     display: flex;
     align-items: flex-start;
@@ -64,8 +68,6 @@ const SModalBox = styled.div`
     font-size: 16px;
   }
   .search {
-    margin-left: 10px;
-    padding: 10px;
     border: 1px solid #bb2649;
     border-radius: 3px;
     color: #bb2649;
@@ -196,9 +198,7 @@ const BookAddModal = ({
                     value={text}
                     autoComplete="off"
                   />
-                  <button className="search" onClick={handleClickSearch}>
-                    검색
-                  </button>
+                  <Button text="검색" onClick={handleClickSearch} small />
                 </div>
                 <>
                   {bookList.map((book, idx) => (

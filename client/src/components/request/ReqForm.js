@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BookAddModal from '../common/BookAddModal';
+import { Button } from '../common/Button';
 import { showConfirmAlert } from '../common/Alert';
 
 const StyledReqForm = styled.div`
@@ -12,6 +13,7 @@ const StyledReqForm = styled.div`
     border-bottom: 1px solid #acacac;
   }
 `;
+
 const SInputContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -92,24 +94,8 @@ const SButtonBox = styled.div`
   justify-content: center;
   margin-bottom: 70px;
   button {
-    width: 15%;
+    width: 15rem;
     height: 35px;
-    border: 1px solid #bb2649;
-    border-radius: 5px;
-  }
-  .cancelBtn {
-    color: #bb2649;
-    background-color: #ffffff;
-    border: 1px solid #bb2649;
-    margin-right: 5%;
-    :hover {
-    }
-  }
-  .submitBtn {
-    color: #ffffff;
-    background-color: #bb2649;
-    :hover {
-    }
   }
 `;
 
@@ -124,7 +110,7 @@ const ReqForm = (props) => {
     onBookInfoChange({ ...inputs, [`${type}`]: e.target.value });
   };
 
-  const goBack = () => {
+  const handleCancel = () => {
     showConfirmAlert({
       title: '작성을 취소하시겠습니까?',
       text: '작성 중인 내용은 저장되지 않습니다',
@@ -230,12 +216,12 @@ const ReqForm = (props) => {
         </SInputRight>
       </SInputContainer>
       <SButtonBox>
-        <button className="cancelBtn" onClick={goBack}>
-          취소
-        </button>
-        <button className="submitBtn" onClick={props.editBtn}>
-          {props.page === 'reqAdd' ? '요청' : '수정'}
-        </button>
+        <Button text="취소" onClick={handleCancel} cancel />
+        <Button
+          text={props.page === 'reqAdd' ? '등록' : '수정'}
+          onClick={props.onClick}
+          primary
+        />
       </SButtonBox>
     </StyledReqForm>
   );

@@ -134,10 +134,8 @@ const SAuthorAndStatus = styled.div`
 const SBookInfo = styled.div`
   margin-top: 20px;
   margin-bottom: 40px;
-  /* border: 1px solid #bb2649; */
   background-color: #fffbeac2;
   border-radius: 5px;
-  /* border-bottom: 1px solid #aaaaaa; */
   padding: 24px 12px 5px 24px;
 
   h2 {

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import BookAddModal from '../common/BookAddModal';
 import axios from 'axios';
 import { showWarningAlert, showConfirmAlert } from '../common/Alert';
+import { Button } from '../common/Button';
 
 const StyledShareForm = styled.div`
   .title {
@@ -18,7 +19,7 @@ const SInputContainer = styled.div`
   justify-content: space-between;
   margin: 30px 11% 10px 14%;
   font-size: 13px;
-  #ImgInput {
+  #imgInput {
     display: none;
   }
   @media screen and (max-width: 1070px) {
@@ -58,33 +59,26 @@ const SImgBtn = styled.div`
   text-align: center;
   justify-content: center;
   margin-bottom: 20px;
-  .ImgInputBtn {
+  .imgInputBtn {
     width: 100px;
     height: 30px;
-    margin-right: 5px;
-    border: 1px solid #d0c9c0;
     border-radius: 4px;
+    border: 1px solid #d0c9c0;
+    margin-right: 5px;
     background-color: #d0c9c0;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    :hover {
-      cursor: pointer;
-    }
   }
 
   .imgDelete {
     width: 100px;
     height: 30px;
-    border: 1px solid #d0c9c0;
     border-radius: 4px;
+    border: 1px solid #d0c9c0;
     background-color: #d0c9c0;
-    text-align: center;
     font-weight: 700;
-    :hover {
-      cursor: pointer;
-    }
   }
 `;
 
@@ -123,22 +117,6 @@ const SButtonBox = styled.div`
   button {
     width: 15%;
     height: 35px;
-    border: 1px solid #bb2649;
-    border-radius: 5px;
-  }
-  .cancelBtn {
-    color: #bb2649;
-    background-color: #ffffff;
-    border: 1px solid #bb2649;
-    margin-right: 5%;
-    :hover {
-    }
-  }
-  .submitBtn {
-    color: #ffffff;
-    background-color: #bb2649;
-    :hover {
-    }
   }
 `;
 
@@ -192,7 +170,7 @@ const ShareForm = (props) => {
     }
   };
 
-  const goBack = () => {
+  const handleCancel = () => {
     showConfirmAlert({
       title: '작성을 취소하시겠습니까?',
       text: '작성 중인 내용은 저장되지 않습니다',
@@ -236,11 +214,11 @@ const ShareForm = (props) => {
             <input
               type="file"
               accept="image/*"
-              id="ImgInput"
+              id="imgInput"
               disabled={bookTitle === undefined || bookTitle === ''}
               onChange={uploadImg}
             />
-            <label className="ImgInputBtn" htmlFor="ImgInput">
+            <label className="imgInputBtn" htmlFor="imgInput">
               책 표지 등록
             </label>
             <button className="imgDelete" onClick={() => deleteImg()}>
@@ -319,12 +297,11 @@ const ShareForm = (props) => {
         </SInputRight>
       </SInputContainer>
       <SButtonBox>
-        <button className="cancelBtn" onClick={goBack}>
-          취소
-        </button>
-        <button className="submitBtn" onClick={props.editBtn}>
-          {props.page === 'shareAdd' ? '등록' : '수정'}
-        </button>
+        <Button text="취소" onClick={handleCancel} cancel />
+        <Button
+          text={props.page === 'shareAdd' ? '등록' : '수정'}
+          onClick={props.onClick}
+        />
       </SButtonBox>
     </StyledShareForm>
   );
