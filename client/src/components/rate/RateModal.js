@@ -56,6 +56,9 @@ const SRateInfo = styled.div`
     height: 100px;
     width: 300px;
   }
+  button {
+    margin-top: 20px;
+  }
 `;
 
 const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
@@ -123,7 +126,12 @@ const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
                   placeholder="리뷰를 입력해주세요"
                   onChange={handleChangeRateContent}
                 ></textarea>
-                <Button text="리뷰 남기기" onClick={handleRateSubmit} wide />
+                <Button
+                  text="리뷰 남기기"
+                  onClick={handleRateSubmit}
+                  wide
+                  primary
+                />
               </div>
             </SRateInfo>
           </SRateModal>

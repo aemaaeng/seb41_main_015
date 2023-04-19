@@ -21,12 +21,6 @@ const StyledRateList = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @media screen and (max-width: 555px) {
-      display: flex;
-      flex-direction: column;
-      font-size: 14px;
-      height: 150px;
-    }
     .title {
       display: flex;
       flex-direction: column;
@@ -34,10 +28,14 @@ const StyledRateList = styled.div`
         margin-bottom: 0;
         font-size: 22px;
       }
+    }
+    @media screen and (max-width: 555px) {
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      height: 150px;
       p {
-        @media screen and (max-width: 555px) {
-          display: none;
-        }
+        display: none;
       }
     }
   }
@@ -93,9 +91,10 @@ const RateList = (props) => {
           <p>알고 있는 책에 자유롭게 평점을 매겨보세요!</p>
         </div>
         <RegisterButton
-          rate
           text="책 등록하기"
           onClick={() => navigate('/rateAdd')}
+          rate
+          primary
         />
       </div>
       {isLoading ? <Loading /> : <RateItems data={bookItems} />}

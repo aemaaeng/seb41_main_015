@@ -220,6 +220,7 @@ const ReqForm = (props) => {
         <Button
           text={props.page === 'reqAdd' ? '등록' : '수정'}
           onClick={props.onClick}
+          primary
         />
       </SButtonBox>
     </StyledReqForm>

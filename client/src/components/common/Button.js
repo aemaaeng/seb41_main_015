@@ -1,29 +1,38 @@
 import styled, { css } from 'styled-components';
 
-// 일반 버튼
+// 버튼 배경색 초기 설정: 빨간 배경
+const primary = css`
+  background-color: #bb2649;
+  color: #ffffff;
+`;
+
 const SButton = styled.button`
   width: 90px;
   height: 41px;
   padding: 10px;
   border: 1px solid #bb2649;
   border-radius: 5px;
-  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #bb2649;
+
+  /* 배경색 지정 */
+  ${(props) =>
+    props.primary
+      ? primary
+      : css`
+          background-color: #ffffff;
+          color: #bb2649;
+        `}
   ${(props) =>
     props.cancel
       ? css`
-          background-color: #ffffff;
-          color: #bb2649;
           margin-right: 5%;
         `
       : null}
   ${(props) =>
     props.comment
       ? css`
-          margin-left: 30px;
           width: 100px;
           height: 60px;
         `
@@ -31,10 +40,20 @@ const SButton = styled.button`
   ${(props) =>
     props.wide
       ? css`
-          margin-top: 20px;
           width: 300px;
           height: 35px;
           border-radius: 2.5px;
+        `
+      : null}
+  ${(props) =>
+    props.small
+      ? css`
+          width: fit-content;
+          border-radius: 3px;
+          :hover {
+            background-color: #bb2649;
+            color: #ffffff;
+          }
         `
       : null}
 `;
@@ -43,8 +62,8 @@ const SButton = styled.button`
 const SRegisterButton = styled(SButton)`
   background-color: #cf385b;
   border-radius: 3px;
-  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.7);
   font-weight: 500;
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.7);
 
   :hover {
     color: #ffffff;
@@ -57,13 +76,7 @@ const SRegisterButton = styled(SButton)`
       ? css`
           width: 100px;
         `
-      : css`
-          @media screen and (max-width: 1023px) {
-            width: 80px;
-            margin-right: 0;
-            font-size: 0.95rem;
-          }
-        `}
+      : null}
 `;
 
 export const Button = ({ text, onClick, ...props }) => {

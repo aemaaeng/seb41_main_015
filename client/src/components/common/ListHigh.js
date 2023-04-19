@@ -96,6 +96,13 @@ const SShareTop = styled.div`
       font-size: 0.8rem;
     }
   }
+  button {
+    @media screen and (max-width: 1023px) {
+      width: 80px;
+      margin-right: 0;
+      font-size: 0.95rem;
+    }
+  }
 `;
 
 const ListHigh = ({
@@ -139,6 +146,7 @@ const ListHigh = ({
         <RegisterButton
           text={route === 'share' ? '나눔하기' : '요청하기'}
           onClick={() => navigate(path)}
+          primary
         />
       </div>
     </SShareTop>

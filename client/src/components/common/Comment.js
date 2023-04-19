@@ -36,6 +36,9 @@ const SInputContainer = styled.div`
     border-radius: 5px;
     padding-left: 10px;
   }
+  button {
+    margin-left: 20px;
+  }
 `;
 
 const SCommentContainer = styled.div`
@@ -46,7 +49,6 @@ const SCommentContainer = styled.div`
 const SUserContainer = styled.div`
   display: flex;
   align-items: center;
-  /* margin-bottom: 24px; */
   img {
     margin: 0px 10px 0px 5px;
     width: 35px;
@@ -217,7 +219,7 @@ const Comment = ({ endpoint, comments, id }) => {
           placeholder="댓글을 남겨보세요"
           onChange={handleChangeContent}
         />
-        <Button text="등록" onClick={handleSubmit} comment />
+        <Button text="등록" onClick={handleSubmit} comment primary />
       </SInputContainer>
       <SCommentContainer>
         {comments.map((comment) => {
