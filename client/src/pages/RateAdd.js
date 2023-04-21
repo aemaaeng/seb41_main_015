@@ -221,7 +221,7 @@ const RateAdd = () => {
       </SInputContainer>
       <SButtonBox>
         <Button text="취소" onClick={handleCancel} cancel />
-        <Button text="등록" onClick={handleSubmit} />
+        <Button text="등록" onClick={handleSubmit} primary />
       </SButtonBox>
     </StyledForm>
   );
