@@ -18,7 +18,7 @@ const Home = () => {
     }
   }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (): void => {
     setIsModalOpen(false);
   };
 

@@ -98,12 +98,18 @@ const SModalWrap = styled.div`
   }
 `;
 
-const NicknameModal = ({ isModalOpen, handleCloseModal }) => {
+const NicknameModal = ({
+  isModalOpen,
+  handleCloseModal,
+}: {
+  isModalOpen: boolean;
+  handleCloseModal: () => void;
+}) => {
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const validationCheck = (value) => {
+  const validationCheck = (value: string) => {
     if (value.match(/^[a-zA-Z0-9가-힣+_.-]+$/)) {
       if (value.length === 0) {
         setErrorMessage('닉네임은 필수입니다.');

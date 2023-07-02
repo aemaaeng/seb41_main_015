@@ -6,6 +6,26 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import eventB from '../../images/eventB.png';
 
+interface Rank {
+  bookTitle: string;
+  author: string;
+  publisher: string;
+}
+
+interface StarRank extends Rank {
+  bookId: number;
+  isbn: string;
+  thumbnail: string;
+  avgRate: number;
+  rates: null;
+  createdAt: string;
+  modifiedAt: string;
+}
+
+interface ReqBorRank extends Rank {
+  count: number;
+}
+
 const StyledRanking = styled.div`
   .bookAd {
     width: 80%;
@@ -113,6 +133,7 @@ const Ranking = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // hook 사용 고려해보기
     axios
       .get('v1/books?page=0&size=5&sort=avgRate%2Cdesc')
       .then((res) => {
@@ -144,10 +165,9 @@ const Ranking = () => {
       <SRateContainer>
         <h3>별점 랭킹</h3>
         <div className="rankingBox">
-          {bookStarRank.map((item, index) => (
+          {bookStarRank.map((item: StarRank, index: number) => (
             <div
               className="rankingItem"
-              item={item}
               key={index}
               onClick={() => navigate(`rateDetail/${item.bookId}`)}
             >
@@ -170,8 +190,8 @@ const Ranking = () => {
         <div className="leftConntainer">
           <h3> ⚡ 빌리지 사람들이 많이 나눔하는 책</h3>
           <div className="rankingBox">
-            {bookBorRank.map((item, index) => (
-              <div className="rankingItem" item={item} key={index}>
+            {bookBorRank.map((item: ReqBorRank, index: number) => (
+              <div className="rankingItem" key={index}>
                 <div className="bookDes">
                   <span className="bookNumber">{index + 1}. </span>
                   <span className="bookTitle">
@@ -186,8 +206,8 @@ const Ranking = () => {
         <div className="rightConntainer">
           <h3> ⚡ 빌리지 사람들이 많이 요청하는 책 </h3>
           <div className="rankingBox">
-            {bookReqRank.map((item, index) => (
-              <div className="rankingItem" item={item} key={index}>
+            {bookReqRank.map((item: ReqBorRank, index: number) => (
+              <div className="rankingItem" key={index}>
                 <div className="bookDes">
                   <span className="bookNumber">{index + 1}. </span>
                   <span className="bookTitle">

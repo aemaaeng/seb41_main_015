@@ -80,8 +80,14 @@ const SLoginModal = styled.div`
   }
 `;
 
-const LoginModal = ({ isModalOpen, handleCloseModal }) => {
-  const handleSocialLogin = (type) => {
+const LoginModal = ({
+  isModalOpen,
+  handleCloseModal,
+}: {
+  isModalOpen: boolean;
+  handleCloseModal: () => {};
+}) => {
+  const handleSocialLogin = (type: string) => {
     window.location.assign(
       `https://serverbookvillage.kro.kr/oauth2/authorization/${type}`
     );
