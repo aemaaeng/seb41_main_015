@@ -3,6 +3,29 @@ import { useState, useEffect } from 'react';
 import BookSearch from '../../util/bookApi';
 import { Button } from './Button';
 
+interface BookApi {
+  authors: string[];
+  contents: string;
+  datetime: string;
+  isbn: string;
+  price: number;
+  publisher: string;
+  sale_price: number;
+  status: string;
+  thumbnail: string;
+  title: string;
+  translators: string[];
+  url: string;
+}
+
+interface BookInfo {
+  bookTitle: string;
+  author: string | string[];
+  publisher: string;
+  thumbnail: string;
+  isbn?: string;
+}
+
 const SModalBackground = styled.div`
   position: fixed;
   top: 0;
@@ -109,8 +132,12 @@ const BookAddModal = ({
   isModalOpen,
   handleCloseModal,
   onBookInfoChange,
-  inputs,
   isRate = false,
+}: {
+  isModalOpen: boolean;
+  handleCloseModal: () => {};
+  onBookInfoChange: (bookInfo: BookInfo) => {};
+  isRate: boolean;
 }) => {
   const [bookList, setBookList] = useState([]);
   const [text, setText] = useState('');
@@ -122,25 +149,24 @@ const BookAddModal = ({
     }
   }, [query]);
 
-  const handleEnter = (e) => {
-    if (e.keyCode === 13) {
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
       setQuery(text);
     }
   };
-  const handleClickSearch = (e) => {
+  const handleClickSearch = (e: React.MouseEvent<HTMLDivElement>) => {
     setQuery(text);
   };
 
-  const hadleTextUpdate = (e) => {
+  const hadleTextUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
 
-  const handleChoose = (chooseBook) => {
+  const handleChoose = (chooseBook: BookApi) => {
     const { title, authors, publisher, thumbnail, isbn } = chooseBook;
 
     if (isRate === true) {
       onBookInfoChange({
-        ...inputs,
         bookTitle: title,
         author: authors[0] === undefined ? '저자없음' : authors[0],
         publisher: publisher,
@@ -149,7 +175,6 @@ const BookAddModal = ({
       });
     } else {
       onBookInfoChange({
-        ...inputs,
         bookTitle: title,
         author: authors[0] === undefined ? '저자없음' : authors[0],
         publisher: publisher,
@@ -160,7 +185,7 @@ const BookAddModal = ({
     handleCloseModal();
   };
 
-  const bookSearchHttpHandler = async (query, reset) => {
+  const bookSearchHttpHandler = async (query: string, reset: boolean) => {
     const params = {
       query: query,
       sort: 'accuracy',
@@ -201,7 +226,7 @@ const BookAddModal = ({
                   <Button text="검색" onClick={handleClickSearch} small />
                 </div>
                 <>
-                  {bookList.map((book, idx) => (
+                  {bookList.map((book: BookApi, idx: number) => (
                     <SRenderBox key={idx} onClick={() => handleChoose(book)}>
                       <div className="bookname">{book.title}</div>
                       <span className="authors">{book.authors}</span>|
