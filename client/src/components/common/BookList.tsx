@@ -4,6 +4,25 @@ import { ReactComponent as Eye } from '../../images/eye.svg';
 import { Link } from 'react-router-dom';
 import { elapsed } from '../../util/dateparse';
 
+export interface PostedBook {
+  author: string;
+  bookTitle: string;
+  borrowComments: null;
+  borrowId?: number;
+  requestId?: number;
+  borrowWhthr: boolean;
+  content: string;
+  createdAt: string;
+  displayName: string;
+  imgUrl: string;
+  modifiedAt: string;
+  publisher: string;
+  talkUrl: string;
+  thumbnail: string;
+  title: string;
+  view: number;
+}
+
 const SBookContainer = styled.li`
   display: flex;
   flex-grow: 1;
@@ -143,13 +162,13 @@ const SBookList = styled.ol`
   }
 `;
 
-const BookList = ({ data, route }) => {
+const BookList = ({ data, route }: { data: PostedBook[]; route: string }) => {
   const path = route === 'share' ? '/shareDetail' : '/reqDetail';
   const onlyInShare = route === 'share' ? '' : 'onlyInShare';
 
   return (
     <SBookList>
-      {data.map((article, index) => {
+      {data.map((article: PostedBook, index: number) => {
         // 책 표지 기본 이미지
         const cover = article.thumbnail
           ? article.thumbnail

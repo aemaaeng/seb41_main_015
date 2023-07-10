@@ -11,6 +11,16 @@ import {
   showConfirmAlert,
 } from './Alert';
 
+interface GeneralComment {
+  borrowCommentId?: number;
+  requestCommentId?: number;
+  content: string;
+  createdAt: string;
+  displayName: string;
+  imgUrl: string;
+  modifiedAt: string;
+}
+
 const SCommentForm = styled.div`
   margin: 30px auto;
   padding: 0px 150px 0px 130px;
@@ -115,7 +125,15 @@ const SCommentWrap = styled.div`
   padding-bottom: 10px;
 `;
 
-const Comment = ({ endpoint, comments, id }) => {
+const Comment = ({
+  endpoint,
+  comments,
+  id,
+}: {
+  endpoint: string;
+  comments: GeneralComment[];
+  id: string;
+}) => {
   const [content, setContent] = useState('');
   const [contentForm, setContentForm] = useState('');
 
@@ -123,7 +141,7 @@ const Comment = ({ endpoint, comments, id }) => {
   const currentUser = sessionStorage.getItem('displayName');
 
   //수정 폼 글자수 제한 함수
-  const handleChangeContent = (e) => {
+  const handleChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
     const text_length = e.target.value.length;
     if (text_length > 60) {
@@ -132,7 +150,7 @@ const Comment = ({ endpoint, comments, id }) => {
   };
 
   //수정 폼 판별하기
-  const handleClickModifyComment = (commentId, content) => {
+  const handleClickModifyComment = (commentId: string, content: string) => {
     setContentForm(commentId);
     setContent(content);
   };
@@ -167,7 +185,7 @@ const Comment = ({ endpoint, comments, id }) => {
   };
 
   //댓글 수정
-  const handleClickPatchComment = (commentId) => {
+  const handleClickPatchComment = (commentId: number | undefined) => {
     if (content) {
       instanceAxios
         .patch(`/v1/${endpoint}/comments/${commentId}`, {
@@ -186,7 +204,7 @@ const Comment = ({ endpoint, comments, id }) => {
   };
 
   //댓글 삭제
-  const handleClickDeleteComment = (commentId) => {
+  const handleClickDeleteComment = (commentId: number | undefined) => {
     showConfirmAlert({
       title: '작성을 취소하시겠습니까?',
       text: '작성 중인 내용은 저장되지 않습니다',
@@ -242,7 +260,7 @@ const Comment = ({ endpoint, comments, id }) => {
                 <div className="createdAt">{prettyDate(comment.createdAt)}</div>
               </SUserContainer>
               <SUserComment>
-                {contentForm === commentId ? (
+                {contentForm === String(commentId) ? (
                   //수정할 때
                   <div>
                     <input
@@ -250,7 +268,7 @@ const Comment = ({ endpoint, comments, id }) => {
                       type="text"
                       placeholder="댓글을 입력하십시오"
                       defaultValue={comment.content || ''}
-                      maxLength="60"
+                      maxLength={60}
                       onChange={(e) => {
                         handleChangeContent(e);
                       }}
@@ -269,7 +287,7 @@ const Comment = ({ endpoint, comments, id }) => {
                 {/* 내가 쓴 댓글만 수정가능 */}
                 {isSameUser && (
                   <div className="btnBox">
-                    {contentForm === commentId ? (
+                    {contentForm === String(commentId) ? (
                       <div>
                         <button
                           onClick={() => handleClickPatchComment(commentId)}
@@ -282,7 +300,10 @@ const Comment = ({ endpoint, comments, id }) => {
                       <div>
                         <button
                           onClick={() =>
-                            handleClickModifyComment(commentId, comment.content)
+                            handleClickModifyComment(
+                              String(commentId),
+                              comment.content
+                            )
                           }
                         >
                           수정
