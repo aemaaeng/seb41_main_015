@@ -8,6 +8,35 @@ import { prettyDate } from '../../util/dateparse';
 import { ReactComponent as KakaoFill } from '../../images/kakaofill.svg';
 import { ReactComponent as Eye } from '../../images/eye.svg';
 import { showNormalAlert, showConfirmAlert } from './Alert';
+import { Comments } from './Comment';
+
+interface GeneralPostData {
+  author: string;
+  bookTitle: string;
+  content: string;
+  createdAt: string;
+  displayName: string;
+  imgUrl: string;
+  modifiedAt: string;
+  publisher: string;
+  talkUrl: string;
+  thumbnail: string;
+  title: string;
+  view: number;
+}
+
+interface BorrowPostData extends GeneralPostData {
+  borrowId: number;
+  borrowComments: Comments;
+  borrowWhthr: boolean;
+}
+
+interface RequestPostData extends GeneralPostData {
+  requestId: number;
+  requestComments: Comments;
+}
+
+type PostData = BorrowPostData | RequestPostData;
 
 const SDetailLayout = styled.main`
   padding: 24px;
@@ -182,7 +211,17 @@ const SContact = styled.div`
   }
 `;
 
-const DetailForm = ({ data, endpoint, id, comments }) => {
+const DetailForm = ({
+  data,
+  endpoint,
+  id,
+  comments,
+}: {
+  data: PostData;
+  endpoint: string;
+  id: string;
+  comments: Comments;
+}) => {
   const navigate = useNavigate();
 
   // 자기가 쓴 글이 아니면 수정, 삭제 버튼이 안 보여야 함
@@ -190,6 +229,9 @@ const DetailForm = ({ data, endpoint, id, comments }) => {
   const isSameUser = data.displayName === currentUser ? true : false;
 
   const onlyInShare = endpoint === 'borrows' ? '' : 'onlyInShare';
+  const borrowWhthr = (data: PostData) => {
+    if ('borrowId' in data) return data.borrowWhthr;
+  };
 
   // 삭제 버튼 핸들러
   const handleDelete = () => {
@@ -265,9 +307,9 @@ const DetailForm = ({ data, endpoint, id, comments }) => {
                 </div>
                 <div className={onlyInShare}>
                   {isSameUser ? (
-                    <ToggleSwitch id={id} status={data.borrowWhthr} />
+                    <ToggleSwitch id={id} status={borrowWhthr(data)} />
                   ) : (
-                    <ShareStatus status={data.borrowWhthr} />
+                    <ShareStatus status={borrowWhthr(data)} />
                   )}
                 </div>
               </SAuthorAndStatus>
