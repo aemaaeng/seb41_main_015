@@ -12,14 +12,22 @@ import {
 } from './Alert';
 
 interface GeneralComment {
-  borrowCommentId?: number;
-  requestCommentId?: number;
   content: string;
   createdAt: string;
   displayName: string;
   imgUrl: string;
   modifiedAt: string;
 }
+
+interface BorComment extends GeneralComment {
+  borrowCommentId: number;
+}
+
+interface ReqComment extends GeneralComment {
+  requestCommentId: number;
+}
+
+export type Comments = BorComment[] | ReqComment[];
 
 const SCommentForm = styled.div`
   margin: 30px auto;
@@ -131,7 +139,7 @@ const Comment = ({
   id,
 }: {
   endpoint: string;
-  comments: GeneralComment[];
+  comments: Comments;
   id: string;
 }) => {
   const [content, setContent] = useState('');
@@ -185,7 +193,7 @@ const Comment = ({
   };
 
   //댓글 수정
-  const handleClickPatchComment = (commentId: number | undefined) => {
+  const handleClickPatchComment = (commentId: number) => {
     if (content) {
       instanceAxios
         .patch(`/v1/${endpoint}/comments/${commentId}`, {
@@ -204,7 +212,7 @@ const Comment = ({
   };
 
   //댓글 삭제
-  const handleClickDeleteComment = (commentId: number | undefined) => {
+  const handleClickDeleteComment = (commentId: number) => {
     showConfirmAlert({
       title: '작성을 취소하시겠습니까?',
       text: '작성 중인 내용은 저장되지 않습니다',
@@ -227,6 +235,14 @@ const Comment = ({
     setContentForm('');
   };
 
+  const determineIdCategory = (comment: BorComment | ReqComment) => {
+    if ('borrowCommentId' in comment) {
+      return comment.borrowCommentId;
+    } else {
+      return comment.requestCommentId;
+    }
+  };
+
   return (
     <SCommentForm>
       <SCommentsInfo>댓글 {comments.length}</SCommentsInfo>
@@ -241,10 +257,7 @@ const Comment = ({
       </SInputContainer>
       <SCommentContainer>
         {comments.map((comment) => {
-          const commentId =
-            endpoint === 'borrows'
-              ? comment.borrowCommentId
-              : comment.requestCommentId;
+          const commentId = determineIdCategory(comment);
           const isSameUser = comment.displayName === currentUser ? true : false;
           return (
             <SCommentWrap key={commentId}>
