@@ -85,7 +85,7 @@ const LoginModal = ({
   handleCloseModal,
 }: {
   isModalOpen: boolean;
-  handleCloseModal: () => {};
+  handleCloseModal: () => void;
 }) => {
   const handleSocialLogin = (type: string) => {
     window.location.assign(
