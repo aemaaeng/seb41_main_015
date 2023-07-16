@@ -6,6 +6,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/slice/userSlice';
 import instanceAxios from '../../util/InstanceAxios';
+import { RootState } from '../../redux/store';
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -160,7 +161,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const accessToken = useSelector((state) => state.user.accessToken);
+  const accessToken = useSelector((state: RootState) => state.user.accessToken);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileData, setProfileData] = useState('');
 
@@ -176,7 +177,6 @@ const Header = () => {
       .post('/v1/members/auth/logout')
       .then(() => {
         dispatch(logout());
-        navigate();
         window.location.reload();
       })
       .catch((err) => {
@@ -187,7 +187,7 @@ const Header = () => {
   // 헤더 바깥부분 클릭해도 유지되는 로직 (수정 후: pathname 이용)
   // 나눔 관련 경로: shareList, shareAdd, shareDetail, shareEdit
   // 요청 관련 경로: reqList, reqAdd, reqDetail, reqEdit
-  const currentPage = (location) => {
+  const currentPage = (location: string) => {
     if (pathname.startsWith(location)) {
       return 'olItem focused';
     } else {
