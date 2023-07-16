@@ -24,7 +24,17 @@ const SContainer = styled.div`
   }
 `;
 
-const Paging = ({ page, count, perPage, handlePageChange }) => {
+const Paging = ({
+  page,
+  count,
+  perPage,
+  handlePageChange,
+}: {
+  page: number;
+  count: number;
+  perPage: number;
+  handlePageChange: () => void;
+}) => {
   return (
     <SContainer>
       <Pagination

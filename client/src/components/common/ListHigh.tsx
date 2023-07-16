@@ -112,6 +112,13 @@ const ListHigh = ({
   handleKeyword,
   handleSearch,
   handleOption,
+}: {
+  title: string;
+  route: string;
+  keyword: string;
+  handleKeyword: () => void;
+  handleSearch: () => void;
+  handleOption: () => void;
 }) => {
   const navigate = useNavigate();
   const path = route === 'share' ? '/shareAdd' : '/reqAdd';
