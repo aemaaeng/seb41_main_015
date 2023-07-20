@@ -1,9 +1,19 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import instanceAxios from '../../util/InstanceAxios';
 import { RateStar } from './RateStar';
 import { showWarningAlert, showRequireLogin } from '../common/Alert';
 import { Button } from '../common/Button';
+import { BookInfo } from '../common/BookAddModal';
+import { RateCommentType } from './RateComment';
+
+interface RateBookInfo extends BookInfo {
+  bookId: number;
+  avgRate: number;
+  rates: RateCommentType[];
+  createdAt: string;
+  modifiedAt: string;
+}
 
 const SModalBackground = styled.div`
   position: fixed;
@@ -61,11 +71,25 @@ const SRateInfo = styled.div`
   }
 `;
 
-const RateModal = ({ isModalOpen, handleCloseModal, data }) => {
+const RateModal = ({
+  isModalOpen,
+  handleCloseModal,
+  data,
+}: {
+  isModalOpen: boolean;
+  handleCloseModal: () => void;
+  data: RateBookInfo;
+}) => {
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(0);
 
-  const handleChangeRateContent = (e) => {
+  useEffect(() => {
+    console.log(data);
+  }, []);
+
+  const handleChangeRateContent = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setContent(e.target.value);
   };
 

@@ -2,6 +2,19 @@ import styled from 'styled-components';
 import { ReactComponent as BookStar } from '../../images/bookStar.svg';
 import { useNavigate } from 'react-router-dom';
 
+interface RateItem {
+  author: string;
+  avgRate: number;
+  bookId: number;
+  bookTitle: string;
+  createdAt: string;
+  isbn: string;
+  modifiedAt: string;
+  publisher: string;
+  rates: null;
+  thumbnail: string;
+}
+
 const StyledRateItems = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -48,7 +61,7 @@ const StyledRateItems = styled.div`
     }
   }
 `;
-const RateItems = (data) => {
+const RateItems = (data: { data: RateItem[] }) => {
   const navigate = useNavigate();
 
   return (
@@ -58,7 +71,6 @@ const RateItems = (data) => {
           <div
             className="rateContainer"
             key={index}
-            item={item}
             onClick={() => navigate(`/rateDetail/${item.bookId}`)}
           >
             {item.thumbnail === '' ? (

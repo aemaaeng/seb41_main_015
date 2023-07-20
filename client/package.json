@@ -5,6 +5,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
     "@types/react-js-pagination": "^3.0.4",
+    "@types/react-star-ratings": "^2.3.0",
     "axios": "^1.2.2",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",

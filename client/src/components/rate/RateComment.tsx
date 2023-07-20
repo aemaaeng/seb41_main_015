@@ -2,13 +2,19 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { RateStarSmall } from './RateStar.js';
 import { ReactComponent as BookStar } from '../../images/bookStar.svg';
-import instanceAxios from '../../util/InstanceAxios';
-import { prettyDate } from '../../util/dateparse';
+import instanceAxios from '../../util/InstanceAxios.js';
+import { prettyDate } from '../../util/dateparse.js';
 import {
   showNormalAlert,
   showWarningAlert,
   showConfirmAlert,
 } from '../common/Alert.js';
+import { GeneralComment } from '../common/Comment.js';
+
+export interface RateCommentType extends GeneralComment {
+  rateId: number;
+  rating: number;
+}
 
 const SCommentWrap = styled.div`
   margin: 0px 10%;
@@ -97,17 +103,17 @@ const SControlButtons = styled.div`
   }
 `;
 
-const RateComment = ({ data }) => {
+const RateComment = ({ data }: { data: RateCommentType[] }) => {
   const [rating, setRating] = useState(0);
   const [editId, setEditId] = useState('');
-  const handleEditMode = (rateId, rating, content) => {
+  const handleEditMode = (rateId: string, rating: number, content: string) => {
     setEditId(rateId);
     setRating(rating);
     setEditInput(content);
   };
 
   const [editInput, setEditInput] = useState('');
-  const handleChangeInput = (e) => {
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditInput(e.target.value);
   };
 
@@ -140,7 +146,7 @@ const RateComment = ({ data }) => {
     setEditId('');
   };
 
-  const handleDeleteRate = (rateId) => {
+  const handleDeleteRate = (rateId: string) => {
     // 삭제하기 전에 한 번 물어보기
     showConfirmAlert({
       title: '평점을 삭제하시겠습니까?',
@@ -170,7 +176,7 @@ const RateComment = ({ data }) => {
                   <div className="commentTop">
                     <div className="commentInfo">
                       <div id="author">{rate.displayName}</div>
-                      {editId === rate.rateId ? (
+                      {editId === String(rate.rateId) ? (
                         <RateStarSmall rating={rating} setRating={setRating} />
                       ) : (
                         <div id="rates">
@@ -182,7 +188,7 @@ const RateComment = ({ data }) => {
                     </div>
                     {isSameUser ? (
                       <SControlButtons>
-                        {editId === rate.rateId ? (
+                        {editId === String(rate.rateId) ? (
                           <span className="button" onClick={handleSubmitEdit}>
                             확인
                           </span>
@@ -191,7 +197,7 @@ const RateComment = ({ data }) => {
                             className="button"
                             onClick={() =>
                               handleEditMode(
-                                rate.rateId,
+                                String(rate.rateId),
                                 rate.rating,
                                 rate.content
                               )
@@ -201,14 +207,16 @@ const RateComment = ({ data }) => {
                           </span>
                         )}
                         <span>|</span>
-                        {editId === rate.rateId ? (
+                        {editId === String(rate.rateId) ? (
                           <span className="button" onClick={handleCancelEdit}>
                             취소
                           </span>
                         ) : (
                           <span
                             className="button"
-                            onClick={() => handleDeleteRate(rate.rateId)}
+                            onClick={() =>
+                              handleDeleteRate(String(rate.rateId))
+                            }
                           >
                             삭제
                           </span>
@@ -216,7 +224,7 @@ const RateComment = ({ data }) => {
                       </SControlButtons>
                     ) : null}
                   </div>
-                  {editId === rate.rateId ? (
+                  {editId === String(rate.rateId) ? (
                     <input
                       defaultValue={rate.content}
                       onChange={handleChangeInput}

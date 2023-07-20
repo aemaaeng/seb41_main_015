@@ -22,7 +22,13 @@ const SRatingContainerSmall = styled.div`
   }
 `;
 
-const RateStar = ({ rating, setRating }) => {
+const RateStar = ({
+  rating,
+  setRating,
+}: {
+  rating: number;
+  setRating: React.Dispatch<React.SetStateAction<number>>;
+}) => {
   return (
     <SRatingContainer>
       <StarRatings
@@ -39,7 +45,13 @@ const RateStar = ({ rating, setRating }) => {
   );
 };
 
-const RateStarSmall = ({ rating, setRating }) => {
+const RateStarSmall = ({
+  rating,
+  setRating,
+}: {
+  rating: number;
+  setRating: React.Dispatch<React.SetStateAction<number>>;
+}) => {
   return (
     <SRatingContainerSmall>
       <StarRatings

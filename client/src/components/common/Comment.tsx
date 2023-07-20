@@ -11,7 +11,7 @@ import {
   showConfirmAlert,
 } from './Alert';
 
-interface GeneralComment {
+export interface GeneralComment {
   content: string;
   createdAt: string;
   displayName: string;

@@ -18,7 +18,7 @@ interface BookApi {
   url: string;
 }
 
-interface BookInfo {
+export interface BookInfo {
   bookTitle: string;
   author: string | string[];
   publisher: string;
