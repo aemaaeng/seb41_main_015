@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { RateStarSmall } from './RateStar.js';
+import { RateStarSmall } from './RateStar';
 import { ReactComponent as BookStar } from '../../images/bookStar.svg';
 import instanceAxios from '../../util/InstanceAxios.js';
 import { prettyDate } from '../../util/dateparse.js';
