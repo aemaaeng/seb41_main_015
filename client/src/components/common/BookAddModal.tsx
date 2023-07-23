@@ -135,8 +135,8 @@ const BookAddModal = ({
   isRate = false,
 }: {
   isModalOpen: boolean;
-  handleCloseModal: () => {};
-  onBookInfoChange: (bookInfo: BookInfo) => {};
+  handleCloseModal: () => void;
+  onBookInfoChange: (bookInfo: BookInfo) => void;
   isRate: boolean;
 }) => {
   const [bookList, setBookList] = useState([]);
