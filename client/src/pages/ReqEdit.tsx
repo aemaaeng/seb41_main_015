@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import instanceAxios from '../util/InstanceAxios';
 import { showSuccessAlert, showWarningAlert } from '../components/common/Alert';
+import { BookInfo } from '../components/common/BookAddModal';
+import { FormInput } from './ReqAdd';
 
 const ReqEdit = () => {
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ const ReqEdit = () => {
   const defaultImg =
     ' https://dimg.donga.com/wps/NEWS/IMAGE/2011/11/17/41939226.1.jpg';
 
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<FormInput>({
     bookTitle: '',
     author: '',
     publisher: '',
@@ -59,8 +61,8 @@ const ReqEdit = () => {
     reqAddData();
   }, []);
 
-  const handleBookInfoChange = (bookInfo) => {
-    setInputs(bookInfo);
+  const handleBookInfoChange = (bookInfo: BookInfo) => {
+    setInputs({ ...inputs, ...bookInfo });
   };
 
   return (
