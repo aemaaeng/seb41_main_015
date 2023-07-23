@@ -3,12 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ShareForm from '../components/share/ShareForm';
 import instanceAxios from '../util/InstanceAxios';
 import { showSuccessAlert, showWarningAlert } from '../components/common/Alert';
+import { BookInfo } from '../components/common/BookAddModal';
+import { FormInput } from './ReqAdd';
 
-const ShareEdit = (onBookInfoChange) => {
+const ShareEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<FormInput>({
     bookTitle: '',
     author: '',
     publisher: '',
@@ -57,8 +59,8 @@ const ShareEdit = (onBookInfoChange) => {
     shareAddData();
   }, []);
 
-  const handleBookInfoChange = (bookInfo) => {
-    setInputs(bookInfo);
+  const handleBookInfoChange = (bookInfo: BookInfo) => {
+    setInputs({ ...inputs, ...bookInfo });
   };
 
   return (

@@ -8,11 +8,13 @@ import {
   showWarningAlert,
   showSuccessAlert,
 } from '../components/common/Alert';
+import { BookInfo } from '../components/common/BookAddModal';
+import { FormInput } from './ReqAdd';
 
 const ShareAdd = () => {
   const navigate = useNavigate();
 
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<FormInput>({
     bookTitle: '',
     author: '',
     publisher: '',
@@ -63,8 +65,8 @@ const ShareAdd = () => {
       });
   };
 
-  const handleBookInfoChange = (bookInfo) => {
-    setInputs(bookInfo);
+  const handleBookInfoChange = (bookInfo: BookInfo) => {
+    setInputs({ ...inputs, ...bookInfo });
   };
 
   return (
