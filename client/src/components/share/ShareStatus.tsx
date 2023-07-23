@@ -30,7 +30,7 @@ const SContainer = styled.div`
   }
 `;
 
-const ShareStatus = ({ status }) => {
+const ShareStatus = ({ status }: { status: boolean }) => {
   // props로 나눔 상태 받아오기
   // true이면 거래가능
   // false이면 거래완료

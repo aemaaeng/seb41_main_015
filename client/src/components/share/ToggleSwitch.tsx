@@ -99,7 +99,7 @@ const SLabel = styled.label`
   }
 `;
 
-const ToggleSwitch = ({ id, status }) => {
+const ToggleSwitch = ({ id, status }: { id: string; status: boolean }) => {
   // 초기값은 서버에서 받아온 나눔 상태 값 (boolean)
   const [isAvailable, setIsAvailable] = useState(status);
 

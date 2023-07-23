@@ -5,6 +5,7 @@ import BookAddModal from '../common/BookAddModal';
 import axios from 'axios';
 import { showWarningAlert, showConfirmAlert } from '../common/Alert';
 import { Button } from '../common/Button';
+import { InputProps } from '../../pages/ReqAdd';
 
 const StyledShareForm = styled.div`
   .title {
@@ -120,21 +121,24 @@ const SButtonBox = styled.div`
   }
 `;
 
-const ShareForm = (props) => {
+const ShareForm = (props: InputProps) => {
   const navigate = useNavigate();
   const { inputs, onBookInfoChange } = props;
   const { bookTitle, author, publisher, talkUrl, title, content, thumbnail } =
     inputs;
 
-  const handleChangeString = (e, type) => {
+  const handleChangeString = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: string | string[]
+  ) => {
     onBookInfoChange({ ...inputs, [`${type}`]: e.target.value });
   };
 
-  const handleChangeThmbnail = (image) => {
+  const handleChangeThmbnail = (image: string) => {
     onBookInfoChange({ ...inputs, thumbnail: image });
   };
 
-  const uploadImg = (e) => {
+  const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const uploadImg = e.target.files[0];
       const accessToken = sessionStorage.getItem('accessToken');
@@ -216,7 +220,7 @@ const ShareForm = (props) => {
               accept="image/*"
               id="imgInput"
               disabled={bookTitle === undefined || bookTitle === ''}
-              onChange={uploadImg}
+              onChange={(e) => uploadImg(e)}
             />
             <label className="imgInputBtn" htmlFor="imgInput">
               책 표지 등록
@@ -246,6 +250,7 @@ const ShareForm = (props) => {
               isModalOpen={isModalOpen}
               onBookInfoChange={onBookInfoChange}
               handleCloseModal={handleCloseModal}
+              isRate={false}
             />
           </div>
           <div>
