@@ -8,13 +8,31 @@ import {
   showWarningAlert,
   showSuccessAlert,
 } from '../components/common/Alert';
+import { BookInfo } from '../components/common/BookAddModal';
+
+interface FormInput {
+  bookTitle: string;
+  author: string | string[];
+  publisher: string;
+  talkUrl: string;
+  title: string;
+  content: string;
+  thumbnail: string;
+}
+
+export interface InputProps {
+  page: string;
+  onClick: () => void;
+  inputs: FormInput;
+  onBookInfoChange: (bookInfo: BookInfo) => void;
+}
 
 const ReqAdd = () => {
   const navigate = useNavigate();
   const defaultImg =
     'https://dimg.donga.com/wps/NEWS/IMAGE/2011/11/17/41939226.1.jpg';
 
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<FormInput>({
     bookTitle: '',
     author: '',
     publisher: '',
@@ -28,6 +46,15 @@ const ReqAdd = () => {
     inputs;
 
   const handleClickSubmit = () => {
+    console.log({
+      bookTitle,
+      author,
+      publisher,
+      talkUrl,
+      title,
+      content,
+      thumbnail,
+    });
     const accessToken = sessionStorage.getItem('accessToken');
     if (!accessToken) {
       showRequireLogin();
@@ -64,8 +91,8 @@ const ReqAdd = () => {
       });
   };
 
-  const handleBookInfoChange = (bookInfo) => {
-    setInputs(bookInfo);
+  const handleBookInfoChange = (bookInfo: BookInfo) => {
+    setInputs({ ...inputs, ...bookInfo });
   };
 
   return (

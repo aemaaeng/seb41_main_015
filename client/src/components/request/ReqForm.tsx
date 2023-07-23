@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import BookAddModal from '../common/BookAddModal';
 import { Button } from '../common/Button';
 import { showConfirmAlert } from '../common/Alert';
+import { InputProps } from '../../pages/ReqAdd';
 
 const StyledReqForm = styled.div`
   .title {
@@ -99,15 +100,25 @@ const SButtonBox = styled.div`
   }
 `;
 
-const ReqForm = (props) => {
+const ReqForm = (props: InputProps) => {
   const navigate = useNavigate();
 
   const { inputs, onBookInfoChange } = props;
   const { bookTitle, author, publisher, talkUrl, title, content, thumbnail } =
     inputs;
 
-  const handleChangeString = (e, type) => {
+  const handleChangeString = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: string | string[]
+  ) => {
     onBookInfoChange({ ...inputs, [`${type}`]: e.target.value });
+  };
+
+  const handleChangeThumbnail = (
+    e: React.FormEvent<HTMLImageElement>,
+    imgUrl: string
+  ) => {
+    onBookInfoChange({ ...inputs, thumbnail: imgUrl });
   };
 
   const handleCancel = () => {
@@ -146,7 +157,7 @@ const ReqForm = (props) => {
               alt="bookImg"
               src={thumbnail}
               className="bookImg"
-              onChange={(e) => handleChangeString(e, thumbnail)}
+              onChange={(e) => handleChangeThumbnail(e, thumbnail)}
             />
           </SImgBtn>
         </SInputLeft>
@@ -165,6 +176,7 @@ const ReqForm = (props) => {
               isModalOpen={isModalOpen}
               onBookInfoChange={onBookInfoChange}
               handleCloseModal={handleCloseModal}
+              isRate={false}
             />
           </div>
           <div>
