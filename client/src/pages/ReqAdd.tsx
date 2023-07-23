@@ -10,7 +10,7 @@ import {
 } from '../components/common/Alert';
 import { BookInfo } from '../components/common/BookAddModal';
 
-interface FormInput {
+export interface FormInput {
   bookTitle: string;
   author: string | string[];
   publisher: string;
@@ -46,15 +46,6 @@ const ReqAdd = () => {
     inputs;
 
   const handleClickSubmit = () => {
-    console.log({
-      bookTitle,
-      author,
-      publisher,
-      talkUrl,
-      title,
-      content,
-      thumbnail,
-    });
     const accessToken = sessionStorage.getItem('accessToken');
     if (!accessToken) {
       showRequireLogin();
