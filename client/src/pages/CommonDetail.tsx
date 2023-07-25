@@ -3,9 +3,44 @@ import axios from 'axios';
 import DetailForm from '../components/common/DetailForm';
 import Loading from '../components/common/Loading';
 import { showFailedToFetch } from '../components/common/Alert';
+import { PostData } from '../components/common/DetailForm';
+import { SingleComment } from '../components/common/Comment';
 
-const CommonDetail = ({ endpoint, id }) => {
-  const [data, setData] = useState({});
+const createInitialData = (endpoint: string): PostData => {
+  const generalData = {
+    author: '',
+    bookTitle: '',
+    content: '',
+    createdAt: '',
+    displayName: '',
+    imgUrl: '',
+    modifiedAt: '',
+    publisher: '',
+    talkUrl: '',
+    thumbnail: '',
+    title: '',
+    view: 0,
+  };
+  if (endpoint === 'borrows') {
+    return {
+      ...generalData,
+      borrowId: 0,
+      borrowComments: [],
+      borrowWhthr: false,
+    };
+  } else if (endpoint === 'requests') {
+    return {
+      ...generalData,
+      requestId: 0,
+      requestComments: [],
+    };
+  } else {
+    throw new Error(`Invalid endpoint: ${endpoint}`);
+  }
+};
+
+const CommonDetail = ({ endpoint, id }: { endpoint: string; id: string }) => {
+  const [data, setData] = useState<PostData>(createInitialData(endpoint));
   const [comment, setComment] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,7 +58,10 @@ const CommonDetail = ({ endpoint, id }) => {
             ? res.data.data.borrowComments
             : res.data.data.requestComments;
         //댓글 최신순 정렬
-        comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        comments.sort(
+          (a: SingleComment, b: SingleComment) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
         setComment(comments);
       })
       .catch((err) => {

@@ -8,6 +8,12 @@ import Paging from '../components/common/Paging';
 import Loading from '../components/common/Loading';
 import { showFailedToFetch } from '../components/common/Alert';
 
+interface ListProps {
+  headTitle: string;
+  endpoint: string;
+  route: string;
+}
+
 const SListContainer = styled.div`
   margin: 0px 190px;
   @media screen and (max-width: 1360px) {
@@ -15,7 +21,7 @@ const SListContainer = styled.div`
   }
 `;
 
-const CommonList = (props) => {
+const CommonList = (props: ListProps) => {
   const { headTitle, endpoint, route } = props;
   const { pathname } = useLocation();
 
@@ -58,7 +64,7 @@ const CommonList = (props) => {
       });
   }, [pathname]);
 
-  const getDatabyPage = async (page) => {
+  const getDatabyPage = async (page: number) => {
     try {
       const res = await axios.get(
         `v1/${endpoint}?page=${page - 1}&size=${PER_PAGE}&sort=createdAt%2Cdesc`
@@ -70,7 +76,11 @@ const CommonList = (props) => {
     }
   };
 
-  const getSearchDatabyPage = async (keyword, type, page) => {
+  const getSearchDatabyPage = async (
+    keyword: string,
+    type: string,
+    page: number
+  ) => {
     try {
       const res = await axios.get(
         `v1/${endpoint}/search?field=${type}&keyword=${keyword}&page=${
@@ -84,7 +94,7 @@ const CommonList = (props) => {
     }
   };
 
-  const handlePageChange = async (page) => {
+  const handlePageChange = async (page: number) => {
     setPage(page);
     if (!isSearchMode) {
       const pageData = await getDatabyPage(page);
@@ -97,16 +107,16 @@ const CommonList = (props) => {
     window.scrollTo(0, 0);
   };
 
-  const handleKeyword = (e) => {
+  const handleKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
 
   // 드롭다운 이벤트
-  const handleOption = (e) => {
+  const handleOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setType(e.target.value);
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing === true) return;
 
     if (e.key === 'Enter') {
