@@ -307,9 +307,9 @@ const DetailForm = ({
                 </div>
                 <div className={onlyInShare}>
                   {isSameUser ? (
-                    <ToggleSwitch id={id} status={!borrowWhthr(data)} />
+                    <ToggleSwitch id={id} status={borrowWhthr(data)!} />
                   ) : (
-                    <ShareStatus status={!borrowWhthr(data)} />
+                    <ShareStatus status={borrowWhthr(data)!} />
                   )}
                 </div>
               </SAuthorAndStatus>
