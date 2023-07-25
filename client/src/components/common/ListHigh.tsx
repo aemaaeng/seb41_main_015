@@ -116,9 +116,9 @@ const ListHigh = ({
   title: string;
   route: string;
   keyword: string;
-  handleKeyword: () => void;
-  handleSearch: () => void;
-  handleOption: () => void;
+  handleKeyword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSearch: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleOption: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }) => {
   const navigate = useNavigate();
   const path = route === 'share' ? '/shareAdd' : '/reqAdd';

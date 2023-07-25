@@ -33,7 +33,7 @@ const Paging = ({
   page: number;
   count: number;
   perPage: number;
-  handlePageChange: () => void;
+  handlePageChange: (page: number) => void;
 }) => {
   return (
     <SContainer>
