@@ -36,7 +36,7 @@ interface RequestPostData extends GeneralPostData {
   requestComments: Comments;
 }
 
-type PostData = BorrowPostData | RequestPostData;
+export type PostData = BorrowPostData | RequestPostData;
 
 const SDetailLayout = styled.main`
   padding: 24px;
@@ -307,9 +307,9 @@ const DetailForm = ({
                 </div>
                 <div className={onlyInShare}>
                   {isSameUser ? (
-                    <ToggleSwitch id={id} status={borrowWhthr(data)} />
+                    <ToggleSwitch id={id} status={!borrowWhthr(data)} />
                   ) : (
-                    <ShareStatus status={borrowWhthr(data)} />
+                    <ShareStatus status={!borrowWhthr(data)} />
                   )}
                 </div>
               </SAuthorAndStatus>

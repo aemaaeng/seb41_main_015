@@ -28,6 +28,7 @@ interface ReqComment extends GeneralComment {
 }
 
 export type Comments = BorComment[] | ReqComment[];
+export type SingleComment = BorComment | ReqComment;
 
 const SCommentForm = styled.div`
   margin: 30px auto;
