@@ -151,6 +151,7 @@ const SLogoutBtn = styled(SLoginBtn)`
   color: #ffffff;
   background-color: #bb2649;
   border: 1px solid #bb2649;
+  position: static;
   :hover {
     color: #bb2649;
     background-color: #ffffff;
