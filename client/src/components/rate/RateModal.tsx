@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import instanceAxios from '../../util/InstanceAxios';
 import { RateStar } from './RateStar';
 import { showWarningAlert, showRequireLogin } from '../common/Alert';
@@ -7,10 +7,10 @@ import { Button } from '../common/Button';
 import { BookInfo } from '../common/BookAddModal';
 import { RateCommentType } from './RateComment';
 
-interface RateBookInfo extends BookInfo {
+export interface RateBookInfo extends BookInfo {
   bookId: number;
   avgRate: number;
-  rates: RateCommentType[];
+  rates: RateCommentType[] | null;
   createdAt: string;
   modifiedAt: string;
 }
@@ -82,10 +82,6 @@ const RateModal = ({
 }) => {
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(0);
-
-  useEffect(() => {
-    console.log(data);
-  }, []);
 
   const handleChangeRateContent = (
     e: React.ChangeEvent<HTMLTextAreaElement>

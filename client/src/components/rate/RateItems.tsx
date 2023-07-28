@@ -1,19 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as BookStar } from '../../images/bookStar.svg';
 import { useNavigate } from 'react-router-dom';
-
-interface RateItem {
-  author: string;
-  avgRate: number;
-  bookId: number;
-  bookTitle: string;
-  createdAt: string;
-  isbn: string;
-  modifiedAt: string;
-  publisher: string;
-  rates: null;
-  thumbnail: string;
-}
+import { RateBookInfo } from './RateModal';
 
 const StyledRateItems = styled.div`
   display: grid;
@@ -61,7 +49,7 @@ const StyledRateItems = styled.div`
     }
   }
 `;
-const RateItems = (data: { data: RateItem[] }) => {
+const RateItems = (data: { data: RateBookInfo[] }) => {
   const navigate = useNavigate();
 
   return (
