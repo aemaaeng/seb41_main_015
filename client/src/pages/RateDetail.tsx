@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -7,6 +6,8 @@ import { ReactComponent as BookStar } from '../images/bookStar.svg';
 import RateModal from '../components/rate/RateModal';
 import RateComment from '../components/rate/RateComment';
 import { showFailedToFetch } from '../components/common/Alert';
+import { SingleComment } from '../components/common/Comment';
+import { RateBookInfo } from '../components/rate/RateModal';
 
 const SDetailLayout = styled.main`
   padding: 24px;
@@ -139,8 +140,22 @@ const SStarIcon = styled.div`
 `;
 
 const RateDetail = () => {
+  const initalData: RateBookInfo = {
+    author: '',
+    avgRate: 0,
+    bookId: 0,
+    bookTitle: '',
+    thumbnail: '',
+    isbn: '',
+    createdAt: '',
+    modifiedAt: '',
+    publisher: '',
+    rates: [],
+  };
+
   const { id } = useParams();
-  const [data, setData] = useState({});
+  // data 타입 지정하기
+  const [data, setData] = useState<RateBookInfo>(initalData);
   const [rateComment, setRateComment] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -160,7 +175,10 @@ const RateDetail = () => {
         setData(res.data.data);
         const comments = res.data.data.rates;
         //댓글 최신순 정렬
-        comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        comments.sort(
+          (a: SingleComment, b: SingleComment) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
         setRateComment(comments);
       })
       .catch((err) => {

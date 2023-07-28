@@ -11,6 +11,16 @@ import {
   showConfirmAlert,
   showWarningAlert,
 } from '../components/common/Alert';
+import { BookInfo } from '../components/common/BookAddModal';
+
+interface RateInput {
+  bookTitle: string;
+  author: string | string[];
+  publisher: string;
+  thumbnail: string;
+  isbn: string;
+  content: string;
+}
 
 const StyledForm = styled.div`
   margin: 0px 190px;
@@ -102,7 +112,7 @@ const RateAdd = () => {
   };
   const defaultImg =
     'https://dimg.donga.com/wps/NEWS/IMAGE/2011/11/17/41939226.1.jpg';
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<RateInput>({
     bookTitle: '',
     author: '',
     publisher: '',
@@ -113,12 +123,15 @@ const RateAdd = () => {
 
   const { bookTitle, author, publisher, thumbnail, isbn, content } = inputs;
   const [rating, setRating] = useState(0);
-  const handleBookInfoChange = (bookInfo) => {
-    setInputs(bookInfo);
+  const handleBookInfoChange = (bookInfo: BookInfo) => {
+    setInputs({ ...inputs, ...bookInfo });
   };
 
   // 문자열 변경 감지 함수
-  const handleChangeString = (e, type) => {
+  const handleChangeString = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: string
+  ) => {
     handleBookInfoChange({ ...inputs, [`${type}`]: e.target.value });
   };
 

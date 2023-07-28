@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Paging from '../components/common/Paging';
 import Loading from '../components/common/Loading';
 import { RegisterButton } from '../components/common/Button';
+import { RateBookInfo } from '../components/rate/RateModal';
 
 const StyledRateList = styled.div`
   margin: 0 190px;
@@ -41,8 +42,8 @@ const StyledRateList = styled.div`
   }
 `;
 
-const RateList = (props) => {
-  const [bookItems, setBookItems] = useState([]);
+const RateList = () => {
+  const [bookItems, setBookItems] = useState<RateBookInfo[]>([]);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -65,7 +66,7 @@ const RateList = (props) => {
       });
   }, []);
 
-  const getDatabyPage = async (page) => {
+  const getDatabyPage = async (page: number) => {
     try {
       const res = await axios.get(
         `v1/books?page=${page - 1}&size=${PER_PAGE}&sort=createdAt%2Cdesc`
@@ -77,7 +78,7 @@ const RateList = (props) => {
     }
   };
 
-  const handlePageChange = async (page) => {
+  const handlePageChange = async (page: number) => {
     setPage(page);
     const pageData = await getDatabyPage(page);
     setBookItems(pageData.data);
