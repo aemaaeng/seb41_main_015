@@ -4,6 +4,7 @@ import Paging from '../components/common/Paging';
 import { prettyDate } from '../util/dateparse';
 import { useNavigate } from 'react-router-dom';
 import instanceAxios from '../util/InstanceAxios';
+import { BorrowPostData } from '../components/common/DetailForm';
 
 const STable = styled.table`
   display: flex;
@@ -129,7 +130,7 @@ const MyPage = () => {
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
   const [imgUrl, setImgUrl] = useState('');
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<BorrowPostData[]>([]);
 
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0); // 총 데이터 개수
@@ -153,7 +154,7 @@ const MyPage = () => {
   }, []);
 
   //pagenation 페이지네이션 컴포넌트에서 각 숫자를 눌렀을 때 작동하는 함수
-  const handlePageChange = async (page) => {
+  const handlePageChange = async (page: number) => {
     setPage(page);
     const res = await instanceAxios.get(
       `/v1/borrows/mine?page=${page - 1}&size=${PER_PAGE}&sort=createdAt%2Cdesc`

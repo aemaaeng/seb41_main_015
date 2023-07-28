@@ -189,24 +189,23 @@ const MyPageEdit = () => {
   const navigate = useNavigate();
 
   //input 입력값 상태 저장
-  const handleChangeName = (e) => {
+  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
-  const handleChangeDisplayName = (e) => {
+  const handleChangeDisplayName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDisplayName(e.target.value);
   };
-  const handleChangeEmail = (e) => {
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const handleChangeAddress = (e) => {
+  const handleChangeAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value);
   };
-  const handleChangePhoneNumber = (e) => {
+  const handleChangePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(e.target.value);
   };
   //이미지 사진 반영하기
-  const handleChangeProfile = (e) => {
-    setImgUrl(e.target.files[0]);
+  const handleChangeProfile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const uploadFile = e.target.files[0];
       const formData = new FormData();

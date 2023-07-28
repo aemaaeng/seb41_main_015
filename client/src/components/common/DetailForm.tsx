@@ -25,7 +25,7 @@ interface GeneralPostData {
   view: number;
 }
 
-interface BorrowPostData extends GeneralPostData {
+export interface BorrowPostData extends GeneralPostData {
   borrowId: number;
   borrowComments: Comments;
   borrowWhthr: boolean;
