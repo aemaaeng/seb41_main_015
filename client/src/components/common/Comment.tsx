@@ -254,7 +254,7 @@ const Comment = ({
           placeholder="댓글을 남겨보세요"
           onChange={handleChangeContent}
         />
-        <Button text="등록" onClick={handleSubmit} comment primary />
+        <Button text="등록" onClick={handleSubmit} kind="comment" primary />
       </SInputContainer>
       <SCommentContainer>
         {comments.map((comment) => {

@@ -149,7 +149,7 @@ const RateModal = ({
                 <Button
                   text="리뷰 남기기"
                   onClick={handleRateSubmit}
-                  wide
+                  size="wide"
                   primary
                 />
               </div>

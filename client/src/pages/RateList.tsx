@@ -94,7 +94,7 @@ const RateList = () => {
         <RegisterButton
           text="책 등록하기"
           onClick={() => navigate('/rateAdd')}
-          rate
+          kind="rate"
           primary
         />
       </div>

@@ -154,7 +154,7 @@ const BookAddModal = ({
       setQuery(text);
     }
   };
-  const handleClickSearch = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleClickSearch = () => {
     setQuery(text);
   };
 
@@ -223,7 +223,11 @@ const BookAddModal = ({
                     value={text}
                     autoComplete="off"
                   />
-                  <Button text="검색" onClick={handleClickSearch} small />
+                  <Button
+                    text="검색"
+                    onClick={handleClickSearch}
+                    size="small"
+                  />
                 </div>
                 <>
                   {bookList.map((book: BookApi, idx: number) => (

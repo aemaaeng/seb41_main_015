@@ -302,7 +302,7 @@ const ShareForm = (props: InputProps) => {
         </SInputRight>
       </SInputContainer>
       <SButtonBox>
-        <Button text="취소" onClick={handleCancel} cancel />
+        <Button text="취소" onClick={handleCancel} kind="cancel" />
         <Button
           text={props.page === 'shareAdd' ? '등록' : '수정'}
           onClick={props.onClick}
